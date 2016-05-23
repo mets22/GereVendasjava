@@ -4,12 +4,12 @@ import java.util.Objects;
  * Created by mets on 23-05-2016.
  */
 public class Venda {
-    String codProd;
-    String codCli;
-    Float preco;
-    Integer nuni; //nº unidades
-    Boolean promo;
-    Integer mes;
+    private String codProd;
+    private String codCli;
+    private Float preco;
+    private Integer nuni; //nº unidades
+    private Boolean promo;
+    private Integer mes;
 
     public Venda(String codProd, String codCli, Float preco, Integer nuni, Boolean promo,Integer mes)
     {
