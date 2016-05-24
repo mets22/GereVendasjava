@@ -4,15 +4,18 @@ import java.util.Objects;
  * Created by mets on 23-05-2016.
  */
 public class Venda {
+
+    private Integer filial;
     private String codProd;
     private String codCli;
-    private Float preco;
+    private Double preco;
     private Integer nuni; //nº unidades
     private Boolean promo;
     private Integer mes;
 
-    public Venda(String codProd, String codCli, Float preco, Integer nuni, Boolean promo,Integer mes)
+    public Venda(Integer filial,String codProd, String codCli, Double preco, Integer nuni, Boolean promo,Integer mes)
     {
+        this.filial = filial;
         this.codProd = codProd;
         this.codCli = codCli;
         this.preco = preco;
@@ -23,6 +26,7 @@ public class Venda {
 
     public Venda(Venda v)
     {
+        this.filial = v.getFilial();
         this.codCli = v.getCodCli();
         this.codProd = v.getCodProd();
         this.preco = v.getPreco();
@@ -31,11 +35,15 @@ public class Venda {
         this.mes = v.getMes();
     }
 
+    public Integer getFilial() {
+        return filial;
+    }
+
     public String getCodProd() {
         return this.codProd;
     }
 
-    public Float getPreco() {
+    public Double getPreco() {
         return this.preco;
     }
 
@@ -61,11 +69,25 @@ public class Venda {
     }
 
     @Override
+    public String toString() {
+        return "Venda{" +
+                "filial=" + filial +
+                ", codProd='" + codProd + '\'' +
+                ", codCli='" + codCli + '\'' +
+                ", preco=" + preco +
+                ", nuni=" + nuni +
+                ", promo=" + promo +
+                ", mes=" + mes +
+                '}';
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Venda)) return false;
         Venda venda = (Venda) o;
-        return Objects.equals(codProd, venda.codProd) &&
+        return Objects.equals(filial, venda.filial) &&
+                Objects.equals(codProd, venda.codProd) &&
                 Objects.equals(codCli, venda.codCli) &&
                 Objects.equals(preco, venda.preco) &&
                 Objects.equals(nuni, venda.nuni) &&
@@ -75,18 +97,6 @@ public class Venda {
 
     @Override
     public int hashCode() {
-        return Objects.hash(codProd, codCli, preco, nuni, promo, mes);
-    }
-
-    @Override
-    public String toString() {
-        return "Venda{" +
-                "codProd='" + codProd + '\'' +
-                ", codCli='" + codCli + '\'' +
-                ", preco=" + preco +
-                ", nuni=" + nuni +
-                ", promo=" + promo +
-                ", mes=" + mes +
-                '}';
+        return Objects.hash(filial, codProd, codCli, preco, nuni, promo, mes);
     }
 }
