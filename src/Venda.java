@@ -13,6 +13,16 @@ public class Venda {
     private Boolean promo;
     private Integer mes;
 
+    public Venda(){
+        this.filial = 0;
+        this.codProd = "";
+        this.codCli = "";
+        this.preco = 0.0;
+        this.nuni = 0;
+        this.promo = Boolean.FALSE;
+        this.mes = 0;
+    }
+
     public Venda(Integer filial,String codProd, String codCli, Double preco, Integer nuni, Boolean promo,Integer mes)
     {
         this.filial = filial;
@@ -71,13 +81,13 @@ public class Venda {
     @Override
     public String toString() {
         return "Venda{" +
-                "filial=" + filial +
+                "filial=" + filial.toString() +
                 ", codProd='" + codProd + '\'' +
                 ", codCli='" + codCli + '\'' +
-                ", preco=" + preco +
-                ", nuni=" + nuni +
-                ", promo=" + promo +
-                ", mes=" + mes +
+                ", preco=" + preco.toString() +
+                ", nuni=" + nuni.toString() +
+                ", promo=" + promo.toString() +
+                ", mes=" + mes.toString() +
                 '}';
     }
 

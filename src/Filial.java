@@ -59,7 +59,7 @@ public class Filial {
     @Override
     public String toString() {
         return "Filial{" +
-                "vendas=" + vendas +
+                "vendas=" + vendas.toString() +
                 '}';
     }
 

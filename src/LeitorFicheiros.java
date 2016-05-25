@@ -6,14 +6,16 @@ import java.util.*;
  */
 public class LeitorFicheiros {
 
+    public LeitorFicheiros(){
+    }
+
     public static ArrayList<String> readLinesWithBuff(String fich) {
     ArrayList<String> linhas = new ArrayList<>();
     BufferedReader inStream = null;
     String linha = null;
     try {
         inStream = new BufferedReader(new FileReader(fich));
-        while( (linha = inStream.readLine()) !=
-                null )
+        while( (linha = inStream.readLine()) !=  null )
             linhas.add(linha);
     }
     catch(IOException e)
@@ -57,5 +59,21 @@ public class LeitorFicheiros {
         }
 
         return (ArrayList<Venda>) aux;
+    }
+
+    public static HashSet<Venda> parseAllLinhasToSet(ArrayList<String> linhas){
+        Set<Venda> aux = new HashSet<>();
+        Venda v;
+
+        for (String s: linhas) {
+            v = parseLinhaVenda(s);
+            if(!aux.contains(v)) aux.add(parseLinhaVenda(s));
+        }
+
+        return (HashSet<Venda>) aux;
+    }
+
+    public static ArrayList<Venda> readVendasWithBuff(String fich){
+        return LeitorFicheiros.parseAllLinhas(LeitorFicheiros.readLinesWithBuff(fich));
     }
 }
