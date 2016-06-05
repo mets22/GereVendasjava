@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class Produto implements Serializable{
+
     private String codigo;
 
     public Produto(String codigo){

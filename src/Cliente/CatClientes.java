@@ -1,16 +1,18 @@
 package Cliente;
 
-import java.util.ArrayList;
+
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TreeSet;
 
-public class CatClientes {
+public class CatClientes implements Serializable{
 
 
-    private HashMap<String,Cpletra> catcli = new HashMap<>();
+    private Map<Character,Cpletra> catcli;
 
     public CatClientes(){
-        this.catcli = new HashMap<String,Cpletra>(26,1);
+        this.catcli = new HashMap<Character, Cpletra>();
     }
 
     public CatClientes(CatClientes c){
@@ -18,23 +20,25 @@ public class CatClientes {
     }
 
     public void inserecli(Cliente c){
-        String cod = c.getCodigo();
-        String primeira = String.valueOf(cod.charAt(0));
-
-        Cpletra caux = catcli.get(primeira);
-
-        TreeSet aux = caux.getLetras();
-        aux.add(c);
+        Character pos = getHash(c);
+        Cpletra aux;
+        if((aux = this.catcli.get(pos)) == null) aux = new Cpletra();
+        aux.insereCliente(c);
+        catcli.put(pos,aux);
     }
 
     public boolean existecli(Cliente c){
+        Character pos = getHash(c);
+
+        Cpletra aux = catcli.get(pos);
+        return aux.existeCliente(c);
+    }
+
+    private Character getHash(Cliente c){
         String cod = c.getCodigo();
-        String primeira = String.valueOf(cod.charAt(0));
-
-        Cpletra caux = catcli.get(primeira);
-
-        TreeSet aux = caux.getLetras();
-        return aux.contains(c);
+        Character pos = cod.charAt(0);
+        pos = Character.toUpperCase(pos);
+        return pos;
     }
 
 }

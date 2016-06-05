@@ -3,25 +3,37 @@ package Produto;
 
 import Cliente.Cliente;
 
+import java.io.Serializable;
+import java.util.Set;
 import java.util.TreeSet;
 
-public class Ppletra {
+public class Ppletra implements Serializable{
 
-    private TreeSet<Produto> letras;
+    private Set<Produto> letras;
 
-    private Ppletra(){
+    public Ppletra(){
         this.letras = new TreeSet<Produto>(new ProdutoComparator());
     }
 
-    private Ppletra(Ppletra p){
+    public Ppletra(Ppletra p){
         this.letras = p.getLetras();
     }
 
-    public TreeSet<Produto> getLetras() {
+    public Set<Produto> getLetras() {
         return letras;
     }
 
     public void setLetras(TreeSet<Produto> letras) {
         this.letras = letras;
     }
+
+    public void insereProduto(Produto p){
+        if(!existeProduto(p)) this.letras.add(p);
+    }
+
+    public boolean existeProduto(Produto p){
+        return this.letras.contains(p);
+    }
+
+    public int getSize(){return this.letras.size();}
 }

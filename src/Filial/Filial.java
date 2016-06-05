@@ -1,10 +1,11 @@
+package Filial;
+
 import java.util.*;
 
-/**
- * Created by mets on 23-05-2016.
- */
+
+
 public class Filial {
-    private static ArrayList<Venda> vendas;
+    /*private static ArrayList<Venda> vendas;
 
     public Filial()
     {
@@ -75,4 +76,5 @@ public class Filial {
     public int hashCode() {
         return Objects.hash(vendas);
     }
+    */
 }

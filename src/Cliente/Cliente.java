@@ -1,7 +1,10 @@
 package Cliente;
 
 
-public class Cliente {
+import java.io.Serializable;
+
+public class Cliente implements Serializable {
+
     private String codigo;
 
     public Cliente(String codigo){
@@ -16,16 +19,14 @@ public class Cliente {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
-    }
-
+    @Override
     public String toString(){
         StringBuilder sp = new StringBuilder();
         sp.append("Cliente:"+this.getCodigo());
         return sp.toString();
     }
 
+    @Override
     public Cliente clone(){
         return new Cliente(this);
     }

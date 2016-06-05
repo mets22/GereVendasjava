@@ -1,46 +1,55 @@
 package Produto;
 
 
+import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 import java.util.TreeSet;
 
-public class CatProdutos {
+public class CatProdutos implements Serializable{
 
-    private HashMap<String,Ppletra> catprod;
+    private Map<Character,Ppletra> catprod;
 
-    private CatProdutos(){
-        this.catprod = new HashMap<String,Ppletra>(26,1);
+    public CatProdutos(){
+        this.catprod = new HashMap<Character, Ppletra>();
     }
 
-    private CatProdutos(CatProdutos c){
+    public CatProdutos(CatProdutos c){
         this.catprod = c.getCatprod();
     }
 
-    public HashMap<String, Ppletra> getCatprod() {
+    public Map<Character, Ppletra> getCatprod() {
         return catprod;
     }
 
-    public void setCatprod(HashMap<String, Ppletra> catprod) {
+    public void setCatprod(HashMap<Character, Ppletra> catprod) {
         this.catprod = catprod;
     }
 
     public void insereprod(Produto p){
-        String cod = p.getCodigo();
-        String primeira = String.valueOf(cod.charAt(0));
+        Character pos = getHash(p);
 
-        Ppletra paux = catprod.get(primeira);
+        Ppletra aux;
+        if((aux = this.catprod.get(pos))==null) aux = new Ppletra();
+        aux.insereProduto(p);
 
-        TreeSet aux = paux.getLetras();
-        aux.add(p);
+        this.catprod.put(pos,aux);
     }
 
     public boolean existeprod(Produto p){
-        String cod = p.getCodigo();
-        String primeira = String.valueOf(cod.charAt(0));
+        Character pos = getHash(p);
 
-        Ppletra paux = catprod.get(primeira);
+        Ppletra aux = this.catprod.get(pos);
 
-        TreeSet aux = paux.getLetras();
-        return aux.contains(p);
+        return aux.existeProduto(p);
     }
+
+    private Character getHash(Produto p){
+        String cod = p.getCodigo();
+        Character pos = cod.charAt(0);
+        pos = Character.toUpperCase(pos);
+        return pos;
+    }
+    
 }

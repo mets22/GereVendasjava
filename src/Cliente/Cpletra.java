@@ -1,11 +1,13 @@
 package Cliente;
 
 
+import java.io.Serializable;
+import java.util.Set;
 import java.util.TreeSet;
 
-public class Cpletra {
+public class Cpletra implements Serializable {
 
-    private TreeSet<Cliente> letras;
+    private Set<Cliente> letras;
 
     public Cpletra(){
         this.letras=new TreeSet<Cliente>(new ClienteComparator());
@@ -16,11 +18,20 @@ public class Cpletra {
     }
 
 
-    public TreeSet<Cliente> getLetras() {
-        return letras;
+    public Set<Cliente> getLetras() {
+        return this.letras;
     }
 
     public void setLetras(TreeSet<Cliente> letras) {
         this.letras = letras;
     }
+
+    public void insereCliente(Cliente c){
+        if(!this.existeCliente(c)) this.letras.add(c);
+    }
+
+    public boolean existeCliente(Cliente c){
+        return this.letras.contains(c);
+    }
+
 }

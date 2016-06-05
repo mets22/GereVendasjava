@@ -1,8 +1,7 @@
+package Filial;
+
 import java.util.Comparator;
 
-/**
- * Created by mets on 23-05-2016.
- */
 
 //comparador por mês da compra
 public class VendaComparator implements Comparator<Venda> {
@@ -10,10 +9,10 @@ public class VendaComparator implements Comparator<Venda> {
     {
         if(v1.getFilial() < v2.getFilial()) return -1;
         else if(v1.getFilial() > v2.getFilial()) return 1;
-        else if(v1.getCodCli().compareTo(v2.getCodCli()) == -1) return -1;
-        else if(v1.getCodCli().compareTo(v2.getCodCli()) == 1) return 1;
-        else if(v1.getCodProd().compareTo(v2.getCodProd()) == -1) return -1;
-        else if(v1.getCodProd().compareTo(v2.getCodProd()) == 1) return 1;
+        else if(v1.getCliente().getCodigo().compareTo(v2.getCliente().getCodigo()) == -1) return -1;
+        else if(v1.getCliente().getCodigo().compareTo(v2.getCliente().getCodigo()) == 1) return 1;
+        else if(v1.getProduto().getCodigo().compareTo(v2.getProduto().getCodigo()) == -1) return -1;
+        else if(v1.getProduto().getCodigo().compareTo(v2.getProduto().getCodigo()) == 1) return 1;
         else if(v1.getMes() < v2.getMes()) return -1;
         else if(v1.getMes() > v2.getMes()) return 1;
         else if((v1.getPromo() == Boolean.TRUE) != v2.getPromo()) return -1;
