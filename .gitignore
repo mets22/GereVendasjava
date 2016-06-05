@@ -25,9 +25,13 @@ vpp/*.vpp~*
 .lock
 
 # enunciado
-enunciado
 
 # ficheiros intelij
-gestor-eleicoes/.idea/*
+.idea/*
 
-gestor-eleicoes/production/*
+*.txt
+*.iml
+
+production/*
+test/*
+.git/*
