@@ -1,3 +1,5 @@
+package Hipermercado;
+
 import Cliente.CatClientes;
 import Filial.Venda;
 import Leitor.Input;

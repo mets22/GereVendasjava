@@ -1,3 +1,4 @@
+package Hipermercado;
 
 import Leitor.Input;
 

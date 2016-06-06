@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Accordion?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<TitledPane alignment="CENTER" animated="false" collapsible="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Hipermercado" textAlignment="CENTER" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HipermercadoController">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+         <children>
+            <TabPane layoutX="14.0" layoutY="6.0" prefHeight="300.0" prefWidth="570.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Dados">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Accordion layoutY="8.0" prefHeight="231.0" prefWidth="568.0">
+                                <panes>
+                                  <TitledPane animated="false" text="Ficheiros">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="581.0">
+                                             <children>
+                                                <Text layoutX="13.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ficheiro Clientes" wrappingWidth="93.255859375" />
+                                                <Text layoutX="13.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ficheiro Produtos" wrappingWidth="120.7421875" />
+                                                <Text layoutX="14.0" layoutY="101.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ficheiro de Vendas" />
+                                                <TextField fx:id="pathFicheiroClientes" layoutX="146.0" layoutY="13.0" prefHeight="25.0" prefWidth="290.0" />
+                                                <TextField fx:id="pathFicheiroVendas" layoutX="146.0" layoutY="84.0" prefHeight="25.0" prefWidth="290.0" />
+                                                <TextField fx:id="pathFicheiroProdutos" layoutX="146.0" layoutY="49.0" prefHeight="25.0" prefWidth="290.0" />
+                                                <Button layoutX="459.0" layoutY="84.0" mnemonicParsing="false" onAction="#handlerProcurarFichVendas" prefHeight="25.0" prefWidth="67.0" text="Procurar" />
+                                                <Button layoutX="459.0" layoutY="13.0" mnemonicParsing="false" onAction="#handlerProcurarFichClientes" prefHeight="25.0" prefWidth="66.0" text="Procurar" />
+                                                <Button layoutX="459.0" layoutY="49.0" mnemonicParsing="false" onAction="#handlerProcurarFichProdutos" prefHeight="25.0" prefWidth="66.0" text="Procurar" />
+                                                <Button layoutX="459.0" layoutY="128.0" mnemonicParsing="false" onAction="#handlerCarregarFichs" prefHeight="25.0" prefWidth="67.0" text="Carregar" />
+                                                <Text layoutX="23.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caso não introduza nenhum ficheiro, serão lidos os ficheiros padrão" />
+                                                <Text layoutX="23.0" layoutY="158.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" (Produtos.txt, Clientes.txt, Vendas_1M.txt)" />
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </TitledPane>
+                                  <TitledPane animated="false" text="Estados">
+                                    <content>
+                                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                             <children>
+                                                <TextField fx:id="pathEstadosText" layoutX="146.0" layoutY="13.0" prefHeight="25.0" prefWidth="290.0" />
+                                                <Button layoutX="453.0" layoutY="13.0" mnemonicParsing="false" onAction="#handlerProcurarEstados" prefHeight="25.0" prefWidth="66.0" text="Procurar" />
+                                                <Text layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ficheiro de Estado" />
+                                                <Button layoutX="454.0" layoutY="91.0" mnemonicParsing="false" onAction="#handlerGuardarEstado" prefHeight="25.0" prefWidth="65.0" text="Guardar" />
+                                                <Button layoutX="370.0" layoutY="91.0" mnemonicParsing="false" onAction="#handlerRestaurarEstado" text="Restaurar" />
+                                                <Text layoutX="14.0" layoutY="95.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caso não seja introduzido texto irá ser carregado ou guardado" />
+                                                <Text layoutX="14.0" layoutY="116.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" do/para o ficheiro hipermercado.dat" />
+                                             </children>
+                                          </AnchorPane>
+                                    </content>
+                                  </TitledPane>
+                                </panes>
+                              </Accordion>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="Queries Estatísticas">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  </content>
+                </Tab>
+                  <Tab text="Queries Interactivas">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                    </content>
+                  </Tab>
+              </tabs>
+            </TabPane>
+            <Button layoutX="517.0" layoutY="321.0" mnemonicParsing="false" onAction="#handlerSair" text="Sair" />
+         </children></AnchorPane>
+  </content>
+</TitledPane>
