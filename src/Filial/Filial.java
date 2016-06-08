@@ -9,7 +9,7 @@ import java.util.*;
 
 public class Filial {
     private TreeMap<Produto,ArrayList<FilialCli>> vendas;
-    private TreeMap<Produto,ArrayList<Integer>> quantidadevendas;
+    private TreeMap<Produto,Integer> quantidadevendas;
 
     public Filial(){
         vendas = new TreeMap<>();quantidadevendas = new TreeMap<>();
@@ -91,6 +91,7 @@ public class Filial {
             flag = false;
             res.add(new TrioNComprasNProdsTotGasto(nCompras,nProds,totgasto));
         }
+        return res;
     }
 
     public ArrayList<TrioNVendasNClientesTotFact> getVendasMensais(Produto p){// resposta a query 4
@@ -109,7 +110,41 @@ public class Filial {
             nVendas = filcli.getnVendas();
             res.add(new TrioNVendasNClientesTotFact(nVendas,nClientes,totfacturado));
         }
+        return res;
     }
 
+    public TreeMap<Produto,ParTotVendasTotClientesMes> getProdsMaisVendidosUnid(Integer x){//query 6
+        TreeMap<Produto,ParTotVendasTotClientesMes> res = new TreeMap<>();
+        TreeMap<Produto,Integer> auxres = new TreeMap<>();
+        Map.Entry<Produto,Integer> maxentry = null;
+        Iterator<Produto> auxitprod;
+        Integer i;
+        FilialCli auxfilcli;
+        TreeSet<Cliente> auxtreecli;
 
+        for(i=0;i<x;i++) {
+            for (Map.Entry<Produto, Integer> entry : quantidadevendas.entrySet()) {
+                if (maxentry == null || entry.getValue().compareTo(maxentry.getValue()) > 0) {
+                    maxentry = entry;
+                    auxres.put(maxentry.getKey(), maxentry.getValue());
+                    quantidadevendas.remove(maxentry.getKey());
+                }
+            }
+        }
+
+        quantidadevendas.putAll(auxres);
+
+        auxitprod = auxres.keySet().iterator();
+
+        while (auxitprod.hasNext()){
+            auxtreecli = new TreeSet<>();
+            Produto p = auxitprod.next();
+            for(i=0;i<12;i++){
+                auxfilcli = vendas.get(p).get(i);
+                auxtreecli.addAll(auxfilcli.getClientes());
+            }
+            res.put(p,new ParTotVendasTotClientesMes(auxres.get(p),auxtreecli.size()));
+        }
+        return res;
+    }
 }

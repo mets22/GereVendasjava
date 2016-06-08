@@ -46,6 +46,10 @@ public class FilialCli {
         return (TreeSet<Cliente>) vendascli.navigableKeySet();
     }
 
+    public Integer getnClientes(){
+        return vendascli.size();
+    }
+
     public double getTotFacturado(){
         double res = 0.0;
         Iterator<TreeSet<Venda>> aux = vendascli.values().iterator();
