@@ -22,11 +22,8 @@ public class Filial {
         if(vendas.containsKey(prod)) {
             ArrayList<FilialCli> aux = vendas.get(prod);
             FilialCli auxfilial = aux.get(mes-1);
-            ArrayList<Integer> auxalint = quantidadevendas.get(prod);
-            Integer quanti = auxalint.get(mes-1) + v.getNuni();
+            Integer auxalint = quantidadevendas.get(prod) + v.getNuni();
 
-            auxalint.remove(mes-1);
-            auxalint.add(mes-1,quanti);
             auxfilial.insereFilialCli(v);
             aux.remove(mes-1);
             aux.add(mes-1,auxfilial);
@@ -37,14 +34,12 @@ public class Filial {
         else{
             ArrayList<FilialCli> aux = new ArrayList<>();
             FilialCli auxfilial = new FilialCli();
-            ArrayList<Integer> auxalint = new ArrayList<>();
             Integer quanti = v.getNuni();
 
             aux.add(mes-1,auxfilial);
             auxfilial.insereFilialCli(v);
             vendas.put(prod,aux);
-            auxalint.add(mes-1,quanti);
-            quantidadevendas.put(prod,auxalint);
+            quantidadevendas.put(prod,quanti);
         }
     }
 
@@ -113,6 +108,24 @@ public class Filial {
         return res;
     }
 
+    public TreeMap<Produto,Integer> getProdsMaisComprados(Cliente c){ // query 5
+        TreeMap<Produto,Integer> res = new TreeMap<>();
+        FilialCli auxfilcli;
+        Iterator<Produto> auxit = vendas.keySet().iterator();
+        Integer i, nCompras;
+
+        while(auxit.hasNext()){
+            nCompras = 0;
+            Produto p = auxit.next();
+            for(i=0;i<12;i++){
+                auxfilcli = vendas.get(p).get(i);
+                nCompras += auxfilcli.getnVendasCli(c);
+            }
+            res.put(p,nCompras);
+        }
+        return res;
+    }
+
     public TreeMap<Produto,ParTotVendasTotClientesMes> getProdsMaisVendidosUnid(Integer x){//query 6
         TreeMap<Produto,ParTotVendasTotClientesMes> res = new TreeMap<>();
         TreeMap<Produto,Integer> auxres = new TreeMap<>();
@@ -147,4 +160,31 @@ public class Filial {
         }
         return res;
     }
+
+    public TreeMap<Cliente,Double> getTop3Cli(){
+        TreeMap<Cliente,Double> auxres = new TreeMap<>();
+        TreeMap<Cliente,Double> res = new TreeMap<>();
+        FilialCli auxfilcli;
+        Iterator<Produto> auxit = vendas.keySet().iterator();
+        Integer i;
+        Double totgasto;
+
+        while(auxit.hasNext()){
+            Produto p = auxit.next();
+            for(i=0;i<12;i++){
+                auxfilcli = vendas.get(p).get(i);
+                Iterator<Cliente> auxitcli = auxfilcli.getClientes().iterator();
+                while(auxitcli.hasNext()){
+                    totgasto = 0.0;
+                    Cliente c = auxitcli.next();
+                    totgasto = auxfilcli.getTotFacturadoCli(c) + auxres.get(c);
+                    auxres.put(c,totgasto);
+                }
+            }
+
+        }
+        res = auxres
+        return res;
+    }
+
 }
