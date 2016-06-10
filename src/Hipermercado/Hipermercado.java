@@ -1,19 +1,20 @@
 package Hipermercado;
 
 import Cliente.CatClientes;
+import Faturacao.Faturacao;
 import Filial.Venda;
 import Leitor.Input;
 import Leitor.LeitorFicheiros;
 import Produto.CatProdutos;
 import Produto.Produto;
 import Filial.Filial;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static Leitor.LeitorFicheiros.parseFicheiroClientes;
 import static Leitor.LeitorFicheiros.parseFicheiroProdutos;
@@ -23,22 +24,26 @@ public class Hipermercado implements Serializable{
 
     private static CatClientes catalogoClientes;
     private static CatProdutos catalogoProdutos;
-    private static List<Filial> vendas;
+    private static Map<Integer, Filial> vendas;
+    private static Faturacao faturacao;
     private static Estatistica estatistica;
 
 
     public Hipermercado(){
         catalogoClientes = new CatClientes();
         catalogoProdutos = new CatProdutos();
-        vendas = new ArrayList<>();
+        vendas = new HashMap<>();
         estatistica = new Estatistica();
+        faturacao = new Faturacao();
     }
 
-    public Hipermercado(CatClientes cclientes,CatProdutos cprodutos, List<Filial> vvendas){
+    public Hipermercado(CatClientes cclientes,CatProdutos cprodutos, Map<Integer,Filial> vvendas,Faturacao faturacao1){
         catalogoClientes = cclientes;
         catalogoProdutos = cprodutos;
-        vendas = vvendas;
+        vendas = new HashMap<Integer, Filial>();
+        vvendas.forEach((k,v) -> vendas.put(k,v));
         estatistica = new Estatistica();
+        faturacao = faturacao1.clone();
     }
 
 
@@ -81,8 +86,8 @@ public class Hipermercado implements Serializable{
 
     public static void lerFicheiros(String ficheiroClientes, String ficheiroProdutos,String ficheiroVendas){
         catalogoClientes = parseFicheiroClientes(ficheiroClientes);
-        catalogoProdutos = parseFicheiroProdutos(ficheiroProdutos);
-        vendas = parseFicheiroVendas(ficheiroVendas,catalogoClientes,catalogoProdutos, estatistica);
+        catalogoProdutos = parseFicheiroProdutos(ficheiroProdutos,faturacao);
+        vendas = parseFicheiroVendas(ficheiroVendas,catalogoClientes,catalogoProdutos, estatistica,faturacao);
     }
 
     public static int tamanho(){
@@ -137,6 +142,12 @@ public class Hipermercado implements Serializable{
 
     public static boolean existeProduto(String p) {
         return catalogoProdutos.existeprod(new Produto(p));
+    }
+
+    public ObservableList<Produto> listaProdutosNaoComprados(){
+        ObservableList<Produto> res = FXCollections.observableArrayList();
+        res.addAll(faturacao.produtosNaoComprados().stream().collect(Collectors.toList()));
+        return res;
     }
 
 }

@@ -2,6 +2,7 @@ package Leitor;
 
 
 import Cliente.Cliente;
+import Faturacao.Faturacao;
 import Filial.Filial;
 import Hipermercado.Estatistica;
 import Produto.Produto;
@@ -79,17 +80,18 @@ public class LeitorFicheiros {
 
 
     /** Métodos de parsing para o ficheiro de produtos **/
-    public static CatProdutos parseFicheiroProdutos(String fich){
+    public static CatProdutos parseFicheiroProdutos(String fich, Faturacao faturacao){
         List<String> parsed = readLinesWithBuff(fich);
-        CatProdutos res = parseAllLinhasProdutos(parsed);
+        CatProdutos res = parseAllLinhasProdutos(parsed,faturacao);
         return res;
     }
 
-    public static CatProdutos parseAllLinhasProdutos(List<String> linhas){
+    public static CatProdutos parseAllLinhasProdutos(List<String> linhas,Faturacao faturacao){
         CatProdutos res = new CatProdutos();
         for(String s:linhas){
             Produto produto = parseLinhaProduto(s);
             res.insereprod(produto);
+            faturacao.adicionaProduto(produto);
         }
         return res;
     }
@@ -158,9 +160,9 @@ public class LeitorFicheiros {
         return venda;
     }
 
-    public static List<Filial> parseAllLinhasVendas(List<String> linhas, CatClientes catClientes, CatProdutos catProdutos, Estatistica estatistica){
+    public static Map<Integer,Filial> parseAllLinhasVendas(List<String> linhas, CatClientes catClientes, CatProdutos catProdutos, Estatistica estatistica, Faturacao faturacaoMap){
 
-        List<Filial> resultado = new ArrayList<>();
+        Map<Integer,Filial> resultado = new HashMap<>();
 
         int clientesnaoregistados= 0;
         int produtosnaoregistados= 0;
@@ -195,11 +197,12 @@ public class LeitorFicheiros {
                 }
 
                 //filial.insere(v);
-                //resultado.add(v.getFilial(), filial);
+                //resultado.put(v.getFilial(), filial);
                 estatistica.adicionaClienteComprou(v.getCliente().clone());
                 estatistica.adicionaProdutoComprado(v.getProduto().clone());
                 estatistica.adicionaFaturacaoTotal(v.getPreco());
                 estatistica.adicionaVendaCorreta(1);
+                faturacaoMap.adicionaVenda(v);
             }else{
                 estatistica.adicionaVendaErrada(1);
             }
@@ -225,10 +228,10 @@ public class LeitorFicheiros {
         return res;
     }
 
-    public static List<Filial> parseFicheiroVendas(String fich, CatClientes catClientes, CatProdutos catProdutos, Estatistica estatistica){
+    public static Map<Integer,Filial> parseFicheiroVendas(String fich, CatClientes catClientes, CatProdutos catProdutos, Estatistica estatistica, Faturacao faturacao){
         List<String> parsed = readLinesWithBuff(fich);
         estatistica.setFicheiro(fich);
-        List<Filial> res = parseAllLinhasVendas(parsed,catClientes,catProdutos,estatistica);
+        Map<Integer,Filial> res = parseAllLinhasVendas(parsed,catClientes,catProdutos,estatistica,faturacao);
         return res;
     }
 

@@ -11,10 +11,10 @@ public class AppTerminal {
 
     private static Hipermercado hipermercado;
 
-    private static String ficheiroClientes = "C:\\Users\\nunof\\Documents\\GitHub\\GereVendasjava\\src\\Hipermercado\\Clientes.txt";
-    private static String ficheiroProdutos = "C:\\Users\\nunof\\Documents\\GitHub\\GereVendasjava\\src\\Hipermercado\\Produtos.txt";
-    private static String ficheiroVendas = "C:\\Users\\nunof\\Documents\\GitHub\\GereVendasjava\\src\\Hipermercado\\Vendas_1M.txt";
-    private static String ficheiroEstado = "C:\\Users\\nunof\\Documents\\GitHub\\GereVendasjava\\src\\Hipermercado\\hipermercado.dat";
+    private static String ficheiroClientes = "Clientes.txt";
+    private static String ficheiroProdutos = "Produtos.txt";
+    private static String ficheiroVendas = "Vendas_1M.txt";
+    private static String ficheiroEstado = "hipermercado.dat";
 
     public static void main(String args[]){
         carregarMenus();

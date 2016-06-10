@@ -1,6 +1,8 @@
 package Produto;
 
 
+import javafx.beans.property.SimpleStringProperty;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -14,6 +16,10 @@ public class Produto implements Serializable{
 
     public Produto(Produto produto){
         this.codigo = produto.getCodigo();
+    }
+
+    public SimpleStringProperty codigoSimpleStringProperty(){
+        return new SimpleStringProperty(this.getCodigo());
     }
 
 

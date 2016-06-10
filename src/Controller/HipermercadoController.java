@@ -5,6 +5,7 @@ import Crono.Crono;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -72,6 +73,7 @@ public class HipermercadoController {
     private static String ficheiroProdutos;
     private static String ficheiroVendas;
     private static String ficheiroEstado;
+
     public void setFacade(Hipermercado facade){this.facade=facade;}
 
     public void setParent(Parent parent){this.parent = parent;}
@@ -134,9 +136,9 @@ public class HipermercadoController {
         this.ficheiroLidoLabel.setText(facade.ultimoFicheiroLido());
         this.vendasErradasLabel.setText(String.valueOf(facade.vendasErradas()));
         this.vendasAZeroLabel.setText(String.valueOf(facade.vendasAZero()));
-        this.clientesLabel.setText(String.valueOf(facade.clientesCompraram()));
+        this.clientesLabel.setText(String.valueOf(facade.nrClientesTotal()));
         this.clientesNCompraramLabel.setText(String.valueOf(facade.ClientesNCompraram()));
-        this.produtosLabel.setText(String.valueOf(facade.produtosComprados()));
+        this.produtosLabel.setText(String.valueOf(facade.nrProdutosTotal()));
         this.produtosNcompradosLabel.setText(String.valueOf(facade.ProdutosNComprados()));
         this.faturacaoLabel.setText(String.valueOf(facade.faturacaoTotal()));
     }
@@ -191,5 +193,19 @@ public class HipermercadoController {
     public void handlerSair(ActionEvent actionEvent) {
         Platform.exit();
         System.exit(0);
+    }
+
+    public void queryOneHandler(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/QueryOne.fxml"));
+        Parent Hipermercado = fxmlLoader.load();
+
+        QueryOneController queryOneController = fxmlLoader.getController();
+
+        queryOneController.setFacade(facade);
+        queryOneController.setParent(Hipermercado);
+        queryOneController.setScene(new Scene(Hipermercado,320,480));
+        queryOneController.setStage(stage);
+        queryOneController.launchController();
     }
 }
