@@ -5,6 +5,7 @@ import Produto.Produto;
 
 import java.util.*;
 
+import static Filial.FilialCli.getVendascli;
 
 
 public class Filial {
@@ -186,5 +187,36 @@ public class Filial {
         res = auxres;
         return res;
     }
+
+    /* Devolve os X clientes com maior variedade de produtos comprados  */
+
+    public ArrayList<String> topvariedade(int X){
+        ArrayList<Clienteqt> res = new ArrayList<>();
+        ArrayList<String> cods = new ArrayList<>();
+
+        Set keys = getVendascli().keySet();
+
+        for (Iterator i = keys.iterator(); i.hasNext();) {
+            Cliente cliente = (Cliente) i.next();
+            TreeSet compras = (TreeSet) getVendascli().get(cliente);
+            Integer qt = compras.size();
+
+            Clienteqt ins = new Clienteqt(cliente,qt);
+
+            for (int j = 0; j < res.size() ; j++) {
+                Clienteqt aux = res.get(j);
+
+                if (qt > aux.getQt()){res.add(j,ins);}
+            }
+        }
+
+        res.subList(1,X);
+        for (int i = 0; i < X ; i++) {
+            cods.add(res.get(i).getC().getCodigo());
+        }
+
+        return cods;
+    }
+
 
 }
