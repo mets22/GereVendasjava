@@ -5,6 +5,7 @@ import Produto.Produto;
 
 import java.util.*;
 
+import static Filial.FilialCli.getVendascli;
 
 
 public class Filial {
@@ -161,9 +162,10 @@ public class Filial {
         return res;
     }
 
-    public TreeMap<Cliente,Double> getTop3Cli(){
+    public TreeMap<Cliente,Double> getTop3Cli(){// query 7
         TreeMap<Cliente,Double> auxres = new TreeMap<>();
         TreeMap<Cliente,Double> res = new TreeMap<>();
+        Map.Entry<Cliente,Double> maxentry = null;
         FilialCli auxfilcli;
         Iterator<Produto> auxit = vendas.keySet().iterator();
         Integer i;
@@ -183,8 +185,47 @@ public class Filial {
             }
 
         }
+        for(i=0;i<3;i++) {
+            for (Map.Entry<Cliente, Double> entry : auxres.entrySet()) {
+                if (maxentry == null || entry.getValue().compareTo(maxentry.getValue()) > 0) {
+                    maxentry = entry;
+                    res.put(maxentry.getKey(), maxentry.getValue());
+                }
+            }
+        }
         res = auxres;
         return res;
     }
+
+    /* Devolve os X clientes com maior variedade de produtos comprados  */
+
+    public ArrayList<String> topvariedade(int X){
+        ArrayList<Clienteqt> res = new ArrayList<>();
+        ArrayList<String> cods = new ArrayList<>();
+
+        Set keys = getVendascli().keySet();
+
+        for (Iterator i = keys.iterator(); i.hasNext();) {
+            Cliente cliente = (Cliente) i.next();
+            TreeSet compras = (TreeSet) getVendascli().get(cliente);
+            Integer qt = compras.size();
+
+            Clienteqt ins = new Clienteqt(cliente,qt);
+
+            for (int j = 0; j < res.size() ; j++) {
+                Clienteqt aux = res.get(j);
+
+                if (qt > aux.getQt()){res.add(j,ins);}
+            }
+        }
+
+        res.subList(1,X);
+        for (int i = 0; i < X ; i++) {
+            cods.add(res.get(i).getC().getCodigo());
+        }
+
+        return cods;
+    }
+
 
 }

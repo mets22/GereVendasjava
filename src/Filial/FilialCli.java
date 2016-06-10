@@ -3,15 +3,18 @@ package Filial;
 import Cliente.Cliente;
 import sun.reflect.generics.tree.Tree;
 
-import java.util.Iterator;
-import java.util.TreeMap;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * Created by mets on 06-06-2016.
  */
+
 public class FilialCli {
     private static TreeMap<Cliente,TreeSet<Venda>> vendascli;
+
+    public static TreeMap<Cliente, TreeSet<Venda>> getVendascli() {
+        return vendascli;
+    }
 
     public FilialCli(){
         this.vendascli = new TreeMap<>();
@@ -87,4 +90,7 @@ public class FilialCli {
             vendascli.put(cli,aux);
         }
     }
-}
+
+
+ }
+

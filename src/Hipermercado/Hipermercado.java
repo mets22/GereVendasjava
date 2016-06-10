@@ -28,7 +28,6 @@ public class Hipermercado implements Serializable{
     private static Faturacao faturacao;
     private static Estatistica estatistica;
 
-
     public Hipermercado(){
         catalogoClientes = new CatClientes();
         catalogoProdutos = new CatProdutos();
