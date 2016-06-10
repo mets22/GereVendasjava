@@ -184,7 +184,6 @@ public class Filial {
             }
 
         }
-
         for(i=0;i<3;i++) {
             for (Map.Entry<Cliente, Double> entry : auxres.entrySet()) {
                 if (maxentry == null || entry.getValue().compareTo(maxentry.getValue()) > 0) {
@@ -193,6 +192,7 @@ public class Filial {
                 }
             }
         }
+        res = auxres;
         return res;
     }
 

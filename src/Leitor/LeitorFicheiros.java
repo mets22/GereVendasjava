@@ -2,6 +2,8 @@ package Leitor;
 
 
 import Cliente.Cliente;
+import Filial.Filial;
+import Hipermercado.Estatistica;
 import Produto.Produto;
 import Filial.Venda;
 
@@ -60,7 +62,7 @@ public class LeitorFicheiros {
 
 
     public static List<String> readLinesWithBuff(String fich) {
-    List<String> linhas = new ArrayList<>();
+    List<String> linhas = new ArrayList<>(10);
     BufferedReader inStream = null;
     String linha = null;
     try {
@@ -156,15 +158,54 @@ public class LeitorFicheiros {
         return venda;
     }
 
-    public static List<Venda> parseAllLinhasVendas(List<String> linhas){
-        List<Venda> res = new ArrayList<>();
+    public static List<Filial> parseAllLinhasVendas(List<String> linhas, CatClientes catClientes, CatProdutos catProdutos, Estatistica estatistica){
 
-        for (String s:linhas){
+        List<Filial> resultado = new ArrayList<>();
+
+        int clientesnaoregistados= 0;
+        int produtosnaoregistados= 0;
+        int comprasazero = 0;
+        int inseridoscomsucesso = 0;
+
+        for(String s: linhas) {
+            int clientenregistadolinha = 0;
+            int produtonregistadolinha = 0;
+            int comprazerolinha = 0;
+
             Venda v = parseLinhaVenda(s);
-            res.add(v);
-        }
+            if (!catClientes.existecli(v.getCliente())) {
+                clientesnaoregistados++;
+                clientenregistadolinha = 1;
+            }
+            if (!catProdutos.existeprod(v.getProduto())) {
+                produtosnaoregistados++;
+                produtonregistadolinha = 1;
+            }
+            if (v.getPreco() == 0.0) {
+                comprasazero++;
+                comprazerolinha = 1;
+            }
 
-        return res;
+            if (comprazerolinha == 0 && clientenregistadolinha == 0 && produtonregistadolinha == 0) {
+                Filial filial;
+                try {
+                    filial = resultado.get(v.getFilial());
+                } catch (IndexOutOfBoundsException e) {
+                    filial = new Filial();
+                }
+
+                //filial.insere(v);
+                //resultado.add(v.getFilial(), filial);
+                estatistica.adicionaClienteComprou(v.getCliente().clone());
+                estatistica.adicionaProdutoComprado(v.getProduto().clone());
+                estatistica.adicionaFaturacaoTotal(v.getPreco());
+                estatistica.adicionaVendaCorreta(1);
+            }else{
+                estatistica.adicionaVendaErrada(1);
+            }
+        }
+        estatistica.adicionaVendasAZero(comprasazero);
+        return resultado;
     }
 
     public static Set<Venda> parseAllLinhasToSet(List<String> linhas){
@@ -178,9 +219,16 @@ public class LeitorFicheiros {
         return res;
     }
 
-    public static Set<Venda> parseFicheiroVendas(String fich){
+    public static Set<Venda> parseFicheiroVendasSet(String fich){
         List<String> parsed = readLinesWithBuff(fich);
         Set<Venda> res = parseAllLinhasToSet(parsed);
+        return res;
+    }
+
+    public static List<Filial> parseFicheiroVendas(String fich, CatClientes catClientes, CatProdutos catProdutos, Estatistica estatistica){
+        List<String> parsed = readLinesWithBuff(fich);
+        estatistica.setFicheiro(fich);
+        List<Filial> res = parseAllLinhasVendas(parsed,catClientes,catProdutos,estatistica);
         return res;
     }
 

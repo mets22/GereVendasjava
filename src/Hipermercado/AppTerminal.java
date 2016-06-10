@@ -11,10 +11,10 @@ public class AppTerminal {
 
     private static Hipermercado hipermercado;
 
-    private static String ficheiroClientes = "C:\\Users\\Nuno\\Documents\\GitHub\\GereVendasjava\\src\\Clientes.txt";
-    private static String ficheiroProdutos = "C:\\Users\\Nuno\\Documents\\GitHub\\GereVendasjava\\src\\Produtos.txt";
-    private static String ficheiroVendas = "C:\\Users\\Nuno\\Documents\\GitHub\\GereVendasjava\\src\\Vendas_1M.txt";
-    private static String ficheiroEstado = "C:\\Users\\Nuno\\Documents\\GitHub\\GereVendasjava\\src\\hipermercado.dat";
+    private static String ficheiroClientes = "C:\\Users\\nunof\\Documents\\GitHub\\GereVendasjava\\src\\Hipermercado\\Clientes.txt";
+    private static String ficheiroProdutos = "C:\\Users\\nunof\\Documents\\GitHub\\GereVendasjava\\src\\Hipermercado\\Produtos.txt";
+    private static String ficheiroVendas = "C:\\Users\\nunof\\Documents\\GitHub\\GereVendasjava\\src\\Hipermercado\\Vendas_1M.txt";
+    private static String ficheiroEstado = "C:\\Users\\nunof\\Documents\\GitHub\\GereVendasjava\\src\\Hipermercado\\hipermercado.dat";
 
     public static void main(String args[]){
         carregarMenus();
@@ -35,7 +35,7 @@ public class AppTerminal {
     public static void carregarMenus(){
         String [] minicial = {
                 "Dados",
-                "Consultas Estatísticas",
+                "Consultas Estatistica",
                 "Consultas Interactivas"
         };
 
@@ -135,9 +135,12 @@ public class AppTerminal {
             switch (menuGuardarEstado.getOpcao()) {
                 case 1:
                     try {
+                        System.out.println("Tamanho clientes:" + hipermercado.tamanho());
                         hipermercado.gravaEstado(ficheiroEstado);
                     } catch (IOException e) {
                         System.out.println("Não foi possível guardar o estado do programa");
+                    } catch (NullPointerException e){
+                        System.out.println("Estrutura com problemas");
                     }
                     menuGuardarEstado.setOpcao(0);
                     break;
