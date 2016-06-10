@@ -3,6 +3,7 @@ package Cliente;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -41,4 +42,14 @@ public class CatClientes implements Serializable{
         return pos;
     }
 
+    public int getSize(){
+        int sizess = 0;
+        Iterator it = this.catcli.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry thisentry = (Map.Entry) it.next();
+            Cpletra a = (Cpletra)thisentry.getValue();
+            sizess+=a.getSize();
+        }
+        return sizess;
+    }
 }

@@ -183,7 +183,7 @@ public class Filial {
             }
 
         }
-        res = auxres
+        res = auxres;
         return res;
     }
 

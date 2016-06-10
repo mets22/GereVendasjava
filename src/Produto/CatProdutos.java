@@ -51,5 +51,16 @@ public class CatProdutos implements Serializable{
         pos = Character.toUpperCase(pos);
         return pos;
     }
+
+    public int getSize(){
+        int sizess = 0;
+        Iterator it = this.catprod.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry thisentry = (Map.Entry) it.next();
+            Ppletra a = (Ppletra) thisentry.getValue();
+            sizess+=a.getSize();
+        }
+        return sizess;
+    }
     
 }

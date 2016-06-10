@@ -11,16 +11,44 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 import Hipermercado.Hipermercado;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class HipermercadoController {
 
+    @FXML
+    private Text ficheiroLidoLabel;
+
+    @FXML
+    private Text vendasLidasLabel;
+
+    @FXML
+    private Text vendasErradasLabel;
+
+    @FXML
+    private Text vendasAZeroLabel;
+
+    @FXML
+    private Text clientesLabel;
+
+    @FXML
+    private Text clientesNCompraramLabel;
+
+    @FXML
+    private Text produtosLabel;
+
+    @FXML
+    private Text produtosNcompradosLabel;
+
+    @FXML
+    private Text faturacaoLabel;
 
     @FXML
     private TextField pathFicheiroVendas;
@@ -102,15 +130,62 @@ public class HipermercadoController {
         alert.setHeaderText("Leitura dos ficheiros com sucesso");
         alert.setContentText("Tempo de leitura: " + Crono.print());
         alert.show();
+
+        this.ficheiroLidoLabel.setText(facade.ultimoFicheiroLido());
+        this.vendasErradasLabel.setText(String.valueOf(facade.vendasErradas()));
+        this.vendasAZeroLabel.setText(String.valueOf(facade.vendasAZero()));
+        this.clientesLabel.setText(String.valueOf(facade.clientesCompraram()));
+        this.clientesNCompraramLabel.setText(String.valueOf(facade.ClientesNCompraram()));
+        this.produtosLabel.setText(String.valueOf(facade.produtosComprados()));
+        this.produtosNcompradosLabel.setText(String.valueOf(facade.ProdutosNComprados()));
+        this.faturacaoLabel.setText(String.valueOf(facade.faturacaoTotal()));
     }
 
     public void handlerProcurarEstados(ActionEvent actionEvent) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Abrir ficheiro de estado");
+        File a = fileChooser.showOpenDialog(stage);
+        this.pathEstadosText.setText(a.getAbsolutePath().toString());
     }
 
     public void handlerGuardarEstado(ActionEvent actionEvent) {
+        String pathestado;
+        if(!(pathestado=this.pathEstadosText.getText().trim()).equals("")) ficheiroEstado = pathestado;
+        try{
+            Crono.start();
+            facade.gravaEstado(ficheiroEstado);
+            Crono.stop();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Guardar estado");
+            alert.setHeaderText("Estado guardado com sucesso");
+            alert.setContentText("Tempo de execução: " + Crono.print());
+            alert.show();
+        }catch (IOException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Guardar estado");
+            alert.setHeaderText("Erro na gravação de estado");
+            alert.show();
+        }
     }
 
     public void handlerRestaurarEstado(ActionEvent actionEvent) {
+        String pathestado;
+        if(!(pathestado=this.pathEstadosText.getText().trim()).equals("")) ficheiroEstado = pathestado;
+        try{
+            Crono.start();
+            facade = Hipermercado.carregaEstado(ficheiroEstado);
+            Crono.stop();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Restaurar estado");
+            alert.setHeaderText("Estado restaurado com sucesso");
+            alert.setContentText("Tempo de execução:" + Crono.print());
+            alert.show();
+        }catch (IOException |ClassNotFoundException e){
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Restaurar estado");
+            alert.setHeaderText("Erro na recuperação de estado");
+            alert.show();
+        }
     }
 
     public void handlerSair(ActionEvent actionEvent) {

@@ -34,4 +34,7 @@ public class Cpletra implements Serializable {
         return this.letras.contains(c);
     }
 
+    public int getSize(){
+        return this.letras.size();
+    }
 }
