@@ -162,9 +162,10 @@ public class Filial {
         return res;
     }
 
-    public TreeMap<Cliente,Double> getTop3Cli(){
+    public TreeMap<Cliente,Double> getTop3Cli(){// query 7
         TreeMap<Cliente,Double> auxres = new TreeMap<>();
         TreeMap<Cliente,Double> res = new TreeMap<>();
+        Map.Entry<Cliente,Double> maxentry = null;
         FilialCli auxfilcli;
         Iterator<Produto> auxit = vendas.keySet().iterator();
         Integer i;
@@ -183,6 +184,14 @@ public class Filial {
                 }
             }
 
+        }
+        for(i=0;i<3;i++) {
+            for (Map.Entry<Cliente, Double> entry : auxres.entrySet()) {
+                if (maxentry == null || entry.getValue().compareTo(maxentry.getValue()) > 0) {
+                    maxentry = entry;
+                    res.put(maxentry.getKey(), maxentry.getValue());
+                }
+            }
         }
         res = auxres;
         return res;
