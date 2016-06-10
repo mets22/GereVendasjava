@@ -20,7 +20,7 @@ public class Hipermercado {
 
     private static CatClientes catalogoClientes;
     private static CatProdutos catalogoProdutos;
-    private static Set<Venda> catVendas;
+    private static  catVendas;
 
     public Hipermercado(){
         catalogoClientes = new CatClientes();
