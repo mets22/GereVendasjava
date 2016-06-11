@@ -5,15 +5,30 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="422.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button layoutX="317.0" layoutY="365.0" mnemonicParsing="false" text="Retroceder" />
-      <TableView prefHeight="356.0" prefWidth="422.0">
+      <Button layoutX="497.0" layoutY="389.0" mnemonicParsing="false" text="Retroceder" />
+      <TableView prefHeight="124.0" prefWidth="602.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Filial" />
-          <TableColumn prefWidth="75.0" text="Cliente" />
-            <TableColumn prefWidth="164.0" text="Dinheiro Facturado" />
+          <TableColumn prefWidth="75.0" text="#" />
+          <TableColumn prefWidth="101.0" text="Cliente" />
+            <TableColumn prefWidth="263.0" text="Dinheiro facturado" />
         </columns>
+      </TableView>
+      <TableView layoutY="124.0" prefHeight="124.0" prefWidth="602.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="#" />
+            <TableColumn prefWidth="101.0" text="Cliente" />
+            <TableColumn prefWidth="263.0" text="Dinheiro facturado" />
+         </columns>
+      </TableView>
+      <TableView layoutY="248.0" prefHeight="124.0" prefWidth="602.0">
+         <columns>
+            <TableColumn prefWidth="75.0" text="#" />
+            <TableColumn prefWidth="101.0" text="Cliente" />
+            <TableColumn prefWidth="263.0" text="Dinheiro facturado" />
+         </columns>
       </TableView>
    </children>
 </Pane>
