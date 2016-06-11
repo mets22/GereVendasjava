@@ -4,12 +4,12 @@ import Cliente.Cliente;
 
 /* Utilizada para a query9*/
 
-public class Clienteqt {
+public class ParStringDouble {
     private Cliente c;
     private Integer qt;
     private Double total;
 
-    public Clienteqt(Cliente cli, Integer qtd, Double tot){
+    public ParStringDouble(Cliente cli, Integer qtd, Double tot){
         setC(cli);
         setQt(qtd);
         setTotal(tot);
