@@ -2,6 +2,7 @@ package Hipermercado;
 
 import Cliente.CatClientes;
 import Cliente.Cliente;
+import Cliente.ClienteComparator;
 import Faturacao.Faturacao;
 import Filial.Venda;
 import Leitor.Input;
@@ -156,20 +157,58 @@ public class Hipermercado implements Serializable{
         return res;
     }
 
+    public ObservableList<OutrasEstatisticas> outrasEstatisticasPedidas(){
+        ObservableList<OutrasEstatisticas> res = FXCollections.observableArrayList();
+        int nrComprasMes;
+        double faturado;
+        int nrClientes;
 
+        for(int i=1;i<=12;i++){
+            nrComprasMes = faturacao.getTotalVendasMes(i);
+            faturado = faturacao.getFaturacaoTotalMes(i);
+            nrClientes = nrClientesDistintosMes(i);
+            res.add(new OutrasEstatisticas(i,nrComprasMes,faturado,nrClientes));
+        }
+        return res;
+    }
+
+    public ObservableList<EstatisticaFilial> estatisticaFilialObservableList(int filial){
+        ObservableList<EstatisticaFilial> res = FXCollections.observableArrayList();
+
+        double faturado;
+
+        for(int i=1;i<=12;i++){
+            faturado = faturacao.faturadoPorFilialMes(filial,i);
+            res.add(new EstatisticaFilial(i,faturado));
+        }
+        return res;
+    }
+
+
+    public static int nrClientesDistintosMes(Integer mes){
+        Iterator<Map.Entry<Integer,Filial>> it = vendas.entrySet().iterator();
+        Set<Cliente> clientesCompraram = new TreeSet<Cliente>(new ClienteComparator());
+
+        while (it.hasNext()){
+            Map.Entry<Integer,Filial> par = it.next();
+            Filial aux = par.getValue();
+            clientesCompraram.addAll(aux.totalClientesDistintosPorMes(mes));
+        }
+        return clientesCompraram.size();
+    }
     public static ParTotVendasTotClientesMes getTotVendasTotCli(Integer mes){
         Iterator<Map.Entry<Integer,Filial>> it = vendas.entrySet().iterator();
         int nrVendas = 0;
         int nrClientes = 0;
         ParTotVendasTotClientesMes resultado;
-        Set<Cliente> clientesCompraram;
+        Set<Cliente> clientesCompraram = new TreeSet<Cliente>();
 
         while(it.hasNext()){
             Map.Entry<Integer,Filial> par = it.next();
             Filial aux = par.getValue();
-            clientesCompraram = aux.totalClientesDistintosPorMes(mes);
-            nrClientes+=clientesCompraram.size();
+            clientesCompraram.addAll(aux.totalClientesDistintosPorMes(mes));
         }
+        nrClientes = clientesCompraram.size();
         nrVendas+= faturacao.getTotalVendasMes(mes);
         resultado = new ParTotVendasTotClientesMes(nrVendas,nrClientes);
         return resultado;

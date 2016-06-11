@@ -78,7 +78,7 @@ public class QueryOneController {
         hipermercadoController.setParent(Hipermercado);
         hipermercadoController.setScene(new Scene(Hipermercado,600,400));
         hipermercadoController.setStage(stage);
-        hipermercadoController.launchController();
+        hipermercadoController.launchController("retorno");
 
     }
 }
