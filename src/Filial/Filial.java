@@ -211,11 +211,55 @@ public class Filial {
         return res;
     }
 
+    public ArrayList<String> topvariedade(int X){
+        ArrayList<ParStringDouble> aux = new ArrayList<ParStringDouble>();
+        ArrayList<String> res = new ArrayList<String>();
+        int j =0;
+
+        Iterator it = vendas.entrySet().iterator();
+        while (it.hasNext()){
+            Map<Integer,FilialCli> aux1 = (Map<Integer,FilialCli>)it.next();
+
+            for (int i = 0; i <12 ; i++) {
+                FilialCli f = aux1.get(i);
+                Set keys = f.getVendascli().keySet();
+
+                for (Iterator ite = keys.iterator(); ite.hasNext();) {
+                    Cliente cliente = (Cliente) ite.next();
+                    TreeSet compras = (TreeSet) f.getVendascli().get(cliente);
+                    Integer qt = compras.size();
+                    Double tot = f.getTotFacturadoCli(cliente);
+
+                    ParStringDouble ins = new ParStringDouble(cliente,qt,tot);
+
+                    if(aux.contains(ins)){
+                        Integer qtactual =aux.get(aux.indexOf(ins)).getQt();
+                        qtactual+=qt;
+                        aux.get(aux.indexOf(ins)).setQt(qtactual);
+                        Double totactual = aux.get(aux.indexOf(ins)).getTotal();
+                        totactual+=tot;
+                        aux.get(aux.indexOf(ins)).setTotal(totactual);
+                    }else{
+                        aux.add(j,ins);
+                        j++;
+
+                    }
+
+            }
+        }
+    }
+        Collections.sort(aux, new Comparator<ParStringDouble>());
+        for (int x = 0; x < X; x++) {
+                res.add(x,aux.get(x).getC().getCodigo());
+        }
+        return res;
+    }
+
     /*Dado um produto p da-nos os X clientes que mais compraram*/
 
-    public ArrayList<Clienteqt> clientesquemaiscompraram(Produto p,int X){
+    public ArrayList<ParStringDouble> clientesquemaiscompraram(Produto p,int X){
         HashMap<Integer,FilialCli> aux = (HashMap<Integer,FilialCli>) vendas.get(p);
-        ArrayList<Clienteqt> res = new ArrayList<>();
+        ArrayList<ParStringDouble> res = new ArrayList<ParStringDouble>();
 
         for (int i = 0; i <12 ; i++) {
             FilialCli f = aux.get(i);
@@ -227,16 +271,17 @@ public class Filial {
                 Integer qt = compras.size();
                 Double tot = f.getTotFacturadoCli(cliente);
 
-                Clienteqt ins = new Clienteqt(cliente,qt,tot);
+                ParStringDouble ins = new ParStringDouble(cliente,qt,tot);
 
                 for (int j = 0; j < res.size() ; j++) {
-                    Clienteqt clista = res.get(j);
+                    ParStringDouble clista = res.get(j);
 
                     if (qt > clista.getQt()){res.add(j,ins);}
                 }
             }
         }
-        res = (ArrayList<Clienteqt>) res.subList(0,X);
+        res = (ArrayList<ParStringDouble>) res.subList(0,X);
         return res;
     }
 }
+
