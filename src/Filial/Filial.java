@@ -209,34 +209,32 @@ public class Filial {
         return res;
     }
 
-    /* Devolve os X clientes com maior variedade de produtos comprados  */
+    /*Dado um produto p da-nos os X clientes que mais compraram*/
 
-    /*public ArrayList<String> topvariedade(int X){
+    public ArrayList<Clienteqt> clientesquemaiscompraram(Produto p,int X){
+        HashMap<Integer,FilialCli> aux = (HashMap<Integer,FilialCli>) vendas.get(p);
         ArrayList<Clienteqt> res = new ArrayList<>();
-        ArrayList<String> cods = new ArrayList<>();
 
-        Set keys = getVendascli().keySet();
+        for (int i = 0; i <12 ; i++) {
+            FilialCli f = aux.get(i);
+            Set keys = f.getVendascli().keySet();
 
-        for (Iterator i = keys.iterator(); i.hasNext();) {
-            Cliente cliente = (Cliente) i.next();
-            TreeSet compras = (TreeSet) getVendascli().get(cliente);
-            Integer qt = compras.size();
+            for (Iterator it = keys.iterator(); it.hasNext();) {
+                Cliente cliente = (Cliente) it.next();
+                TreeSet compras = (TreeSet) f.getVendascli().get(cliente);
+                Integer qt = compras.size();
+                Double tot = f.getTotFacturadoCli(cliente);
 
-            Clienteqt ins = new Clienteqt(cliente,qt);
+                Clienteqt ins = new Clienteqt(cliente,qt,tot);
 
-            for (int j = 0; j < res.size() ; j++) {
-                Clienteqt aux = res.get(j);
+                for (int j = 0; j < res.size() ; j++) {
+                    Clienteqt clista = res.get(j);
 
-                if (qt > aux.getQt()){res.add(j,ins);}
+                    if (qt > clista.getQt()){res.add(j,ins);}
+                }
             }
         }
-
-        res.subList(1,X);
-        for (int i = 0; i < X ; i++) {
-            cods.add(res.get(i).getC().getCodigo());
-        }
-
-        return cods;
-    }*/
-
+        res = (ArrayList<Clienteqt>) res.subList(0,X);
+        return res;
+    }
 }
