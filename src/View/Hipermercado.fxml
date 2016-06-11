@@ -13,7 +13,7 @@
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
          <children>
-            <TabPane layoutX="14.0" layoutY="6.0" prefHeight="300.0" prefWidth="570.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane layoutX="14.0" layoutY="6.0" prefHeight="327.0" prefWidth="570.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab text="Dados">
                   <content>
@@ -64,26 +64,29 @@
                 </Tab>
                 <Tab text="Queries Estatísticas">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="306.0" prefWidth="570.0">
                            <children>
                               <Text layoutX="28.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Ficheiro Lido:" />
                               <Text fx:id="ficheiroLidoLabel" layoutX="266.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FIcheiro" wrappingWidth="288.80340576171875" />
-                              <Text layoutX="27.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendas Lidas:" />
-                              <Text layoutX="28.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendas Erradas:" wrappingWidth="110.455078125" />
-                              <Text layoutX="26.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendas a 0.0:" wrappingWidth="90.603515625" />
-                              <Text layoutX="27.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clientes:" />
-                              <Text layoutX="27.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clientes que não compraram:" />
-                              <Text layoutX="27.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produtos:" />
+                              <Text layoutX="27.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendas Lidas:" />
+                              <Text layoutX="28.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendas Erradas:" wrappingWidth="110.455078125" />
+                              <Text layoutX="26.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vendas a 0.0:" wrappingWidth="90.603515625" />
+                              <Text layoutX="30.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clientes:" />
+                              <Text layoutX="28.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Clientes que não compraram:" />
+                              <Text layoutX="27.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produtos:" />
                               <Text layoutX="27.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produtos não comprados:" />
-                              <Text layoutX="302.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faturação Total:" />
-                              <Text fx:id="vendasLidasLabel" layoutX="266.0" layoutY="76.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
-                              <Text fx:id="vendasErradasLabel" layoutX="265.0" layoutY="99.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
-                              <Text fx:id="vendasAZeroLabel" layoutX="265.0" layoutY="123.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
-                              <Text fx:id="clientesLabel" layoutX="266.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
-                              <Text fx:id="clientesNCompraramLabel" layoutX="265.0" layoutY="180.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
-                              <Text fx:id="produtosLabel" layoutX="266.0" layoutY="203.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
+                              <Text layoutX="301.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faturação Total:" />
+                              <Text fx:id="vendasLidasLabel" layoutX="266.0" layoutY="68.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
+                              <Text fx:id="vendasErradasLabel" layoutX="266.0" layoutY="85.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
+                              <Text fx:id="vendasAZeroLabel" layoutX="265.0" layoutY="102.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
+                              <Text fx:id="clientesLabel" layoutX="265.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
+                              <Text fx:id="clientesNCompraramLabel" layoutX="266.0" layoutY="149.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
+                              <Text fx:id="produtosLabel" layoutX="266.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
                               <Text fx:id="produtosNcompradosLabel" layoutX="266.0" layoutY="227.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="242.8033447265625" />
-                              <Text fx:id="faturacaoLabel" layoutX="410.0" layoutY="250.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faturacao" wrappingWidth="132.8033447265625" />
+                              <Text fx:id="faturacaoLabel" layoutX="410.0" layoutY="271.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faturacao" wrappingWidth="132.8033447265625" />
+                              <Text layoutX="28.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produtos comprados:" />
+                              <Text fx:id="produtosCompradosLabel" layoutX="266.0" layoutY="204.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="250.13671875" />
+                              <Button layoutX="37.0" layoutY="254.0" mnemonicParsing="false" onAction="#outrasEstatisticasHandler" text="Outras Estatísticas" />
                            </children></AnchorPane>
                   </content>
                 </Tab>
@@ -103,7 +106,7 @@
                   </Tab>
               </tabs>
             </TabPane>
-            <Button layoutX="517.0" layoutY="321.0" mnemonicParsing="false" onAction="#handlerSair" text="Sair" />
+            <Button layoutX="527.0" layoutY="335.0" mnemonicParsing="false" onAction="#handlerSair" text="Sair" />
          </children></AnchorPane>
   </content>
 </TitledPane>

@@ -61,16 +61,18 @@ public class Filial {
     }*/
 
     public Set<Cliente> totalClientesDistintosPorMes(Integer mes){
-        Set<Cliente> resultado = new TreeSet<Cliente>(new ClienteComparator());
+        Set<Cliente> resultado = new TreeSet<>(new ClienteComparator());
         Iterator<Map.Entry<Produto,Map<Integer,FilialCli>>> it = this.vendas.entrySet().iterator();
 
         while(it.hasNext()){
             Map.Entry<Produto,Map<Integer,FilialCli>> par = it.next();
             Map<Integer,FilialCli> aux = par.getValue();
             FilialCli filialCli = aux.get(mes);
+
             if(filialCli!=null) {
                 resultado.addAll(filialCli.getClientes());
             }
+
         }
 
         return resultado;

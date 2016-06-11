@@ -88,11 +88,13 @@ public class FaturacaoFilial {
 
     public double faturadoNormalFilialTotal(int filial){
         FaturacaoProduto fat = this.faturacaoPorFilial.get(filial);
+        if(fat==null) return 0.0;
         return fat.faturadoNormalTotal();
     }
 
     public double faturadoNormalFilialMes(int filial, int mes){
         FaturacaoProduto fat = this.faturacaoPorFilial.get(filial);
+        if(fat == null) return 0.0;
         return fat.faturadoNormalMes(mes);
     }
 
@@ -112,12 +114,26 @@ public class FaturacaoFilial {
 
     public double faturadoPromocaoFilialTotal(int filial){
         FaturacaoProduto fat = this.faturacaoPorFilial.get(filial);
+        if(fat == null) return 0.0;
         return fat.faturadoPromocaoTotal();
     }
 
     public double faturadoPromocaoFilialMes(int filial, int mes){
         FaturacaoProduto fat = this.faturacaoPorFilial.get(filial);
+        if(fat == null) return 0.0;
         return fat.faturadoPromocaoMes(mes);
+    }
+
+    public double faturadoTotalFilial(int filial){
+        double promo = faturadoPromocaoFilialTotal(filial);
+        double normal = faturadoNormalFilialTotal(filial);
+        return promo+normal;
+    }
+
+    public double faturadoTotalFilialMes(int filial,int mes){
+        double promo = faturadoPromocaoFilialMes(filial,mes);
+        double normal = faturadoNormalFilialMes(filial,mes);
+        return promo+normal;
     }
 
     public double faturadoPromocaoTotal(){

@@ -103,6 +103,30 @@ public class Faturacao {
         return vendas;
     }
 
+    public double faturadoPorFilial(int filial){
+        double faturado = 0;
+        Iterator<Map.Entry<String,FaturacaoFilial>> it = faturacaoPorProduto.entrySet().iterator();
+
+        while (it.hasNext()){
+            Map.Entry<String,FaturacaoFilial> par = it.next();
+            FaturacaoFilial aux = par.getValue();
+            faturado += aux.faturadoTotalFilial(filial);
+        }
+        return faturado;
+    }
+
+    public double faturadoPorFilialMes(int filial,int mes){
+        double faturado = 0;
+        Iterator<Map.Entry<String,FaturacaoFilial>> it = faturacaoPorProduto.entrySet().iterator();
+
+        while (it.hasNext()){
+            Map.Entry<String,FaturacaoFilial> par = it.next();
+            FaturacaoFilial aux = par.getValue();
+            faturado += aux.faturadoTotalFilialMes(filial,mes);
+        }
+        return faturado;
+    }
+
 
     @Override
     public Faturacao clone(){return new Faturacao(this);}
