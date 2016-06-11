@@ -121,8 +121,8 @@ public class Filial {
         return res;
     }
 
-    public TreeMap<Produto,Integer> getProdsMaisComprados(Cliente c){ // query 5
-        TreeMap<Produto,Integer> res = new TreeMap<>();
+    public TreeSet<ParProdQuantidade> getProdsMaisComprados(Cliente c){ // query 5
+        TreeSet<ParProdQuantidade> res = new TreeSet<>();
         FilialCli auxfilcli;
         Iterator<Produto> auxit = vendas.keySet().iterator();
         Integer i, nCompras;
@@ -134,7 +134,7 @@ public class Filial {
                 auxfilcli = vendas.get(p).get(i);
                 nCompras += auxfilcli.getnVendasCli(c);
             }
-            res.put(p,nCompras);
+            res.add(new ParProdQuantidade(nCompras,p));
         }
         return res;
     }
