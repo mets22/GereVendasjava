@@ -4,7 +4,6 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Text?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.OutrasEstatisticasContoller">
    <children>
@@ -16,9 +15,7 @@
             <TableColumn fx:id="clientesColumn" prefWidth="118.0" text="#Clientes Distintos" />
         </columns>
       </TableView>
-      <Button layoutX="497.0" layoutY="361.0" mnemonicParsing="false" onAction="#retrocederHandler" text="Retroceder" />
-      <Text layoutX="258.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Faturação Total:" />
-      <Text fx:id="faturacaoLabel" layoutX="360.0" layoutY="378.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NA" wrappingWidth="108.716796875" />
-      <Button layoutX="94.0" layoutY="361.0" mnemonicParsing="false" onAction="#FiliaisHandler" text="Filiais" />
+      <Button layoutX="449.0" layoutY="361.0" mnemonicParsing="false" onAction="#retrocederHandler" text="Retroceder" />
+      <Button layoutX="76.0" layoutY="361.0" mnemonicParsing="false" onAction="#FiliaisHandler" text="Filiais" />
    </children>
 </Pane>

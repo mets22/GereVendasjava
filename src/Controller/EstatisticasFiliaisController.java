@@ -3,9 +3,11 @@ package Controller;
 
 import Hipermercado.Hipermercado;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -13,7 +15,7 @@ import javafx.stage.Stage;
 import Hipermercado.EstatisticaFilial;
 
 public class EstatisticasFiliaisController {
-
+    
     @FXML
     private TableView<EstatisticaFilial> filialOneTable;
     @FXML
@@ -85,4 +87,6 @@ public class EstatisticasFiliaisController {
     }
 
 
+    public void retrocederHandler(ActionEvent actionEvent) {
+    }
 }

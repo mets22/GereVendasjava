@@ -60,7 +60,7 @@ public class Filial {
 
     }*/
 
-    public Set<Cliente> totalClientesDistintosPorMes(Integer mes){
+    public Set<Cliente> totalClientesDistintosPorMes(Integer mes){ // query 2
         Set<Cliente> resultado = new TreeSet<>(new ClienteComparator());
         Iterator<Map.Entry<Produto,Map<Integer,FilialCli>>> it = this.vendas.entrySet().iterator();
 
@@ -80,26 +80,39 @@ public class Filial {
 
     public ArrayList<TrioNComprasNProdsTotGasto> getComprasMensais(Cliente c){//resposta a query 3
         ArrayList<TrioNComprasNProdsTotGasto> res = new ArrayList<>(12);
-        Integer nCompras = 0, nProds = 0, i;
-        double totgasto = 0.0;
-        TreeSet<Produto> auxprod = (TreeSet<Produto>) vendas.keySet();
-        Iterator<Produto> auxitprod = auxprod.iterator();
+        Map<Integer,Integer> nCompras = new TreeMap<>();
+
+        Map<Integer,Double> totgasto = new TreeMap<>();
+
+        for(int i= 1; i<= 12;i++){
+            nCompras.put(i,0);
+            totgasto.put(i,0.0);
+        }
+
+        TreeSet<Produto> produtosQueComprou = new TreeSet<Produto>(new ProdutoComparator());
+
+        Iterator<Produto> auxitprod = vendas.keySet().iterator();
         Map<Integer,FilialCli> auxalcli;
-        boolean flag = false;
+
 
         while(auxitprod.hasNext()){
             Produto p = auxitprod.next();
             auxalcli = vendas.get(p);
-            for(i=0;i<12;i++){
+            for (int i = 1; i <= 12; i++) {
                 FilialCli auxfilcli = auxalcli.get(i);
-                if(auxfilcli.existeCli(c)){
-                    if(flag == false) {nProds++;flag = true;}
-                    nCompras += auxfilcli.getnVendasCli(c);
-                    totgasto += auxfilcli.getTotFacturadoCli(c);
+                if(auxfilcli!=null){
+                    if (auxfilcli.existeCli(c)) {
+                        produtosQueComprou.add(p);
+                        int nrComprasTemp = nCompras.get(i) + auxfilcli.getnVendasCli(c);
+                        nCompras.put(i,nrComprasTemp);
+                        double toGastoTemp = totgasto.get(i) + auxfilcli.getTotFacturadoCli(c);
+                        totgasto.put(i,toGastoTemp);
+                    }
                 }
             }
-            flag = false;
-            res.add(new TrioNComprasNProdsTotGasto(nCompras,nProds,totgasto));
+        }
+        for(int i=1;i<=12;i++){
+            res.add(new TrioNComprasNProdsTotGasto(i,nCompras.get(i),produtosQueComprou,totgasto.get(i)));
         }
         return res;
     }

@@ -10,6 +10,7 @@ import Leitor.LeitorFicheiros;
 import Produto.CatProdutos;
 import Produto.Produto;
 import Filial.Filial;
+import Filial.TrioNComprasNProdsTotGasto;
 import Filial.ParTotVendasTotClientesMes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -157,7 +158,7 @@ public class Hipermercado implements Serializable{
         return res;
     }
 
-    public ObservableList<OutrasEstatisticas> outrasEstatisticasPedidas(){
+    public static ObservableList<OutrasEstatisticas> outrasEstatisticasPedidas(){
         ObservableList<OutrasEstatisticas> res = FXCollections.observableArrayList();
         int nrComprasMes;
         double faturado;
@@ -172,7 +173,7 @@ public class Hipermercado implements Serializable{
         return res;
     }
 
-    public ObservableList<EstatisticaFilial> estatisticaFilialObservableList(int filial){
+    public static ObservableList<EstatisticaFilial> estatisticaFilialObservableList(int filial){
         ObservableList<EstatisticaFilial> res = FXCollections.observableArrayList();
 
         double faturado;
@@ -196,6 +197,42 @@ public class Hipermercado implements Serializable{
         }
         return clientesCompraram.size();
     }
+
+    public static ObservableList<TrioNComprasNProdsTotGasto> getComprasMensais(Cliente c){
+        ObservableList<TrioNComprasNProdsTotGasto> lista = FXCollections.observableArrayList();
+
+        ArrayList<TrioNComprasNProdsTotGasto> response;
+        Map<Integer, TrioNComprasNProdsTotGasto> resultado = new HashMap<>();
+
+        Iterator<Map.Entry<Integer,Filial>> it = vendas.entrySet().iterator();
+
+
+        while (it.hasNext()){
+            Map.Entry<Integer,Filial> par = it.next();
+            Filial aux = par.getValue();
+            response = aux.getComprasMensais(c);
+            for(int i=0; i<12;i++){
+                TrioNComprasNProdsTotGasto trio = response.get(i);
+                if(trio!=null){
+                    TrioNComprasNProdsTotGasto trioResultante = resultado.get(i);
+                    if(trioResultante==null) {
+                        trioResultante = new TrioNComprasNProdsTotGasto();
+                        trioResultante.setMes(i+1);
+                    }
+                    trioResultante.adicionaNrCompras(trio.getnCompras());
+                    trioResultante.adicionaProdutos(trio.getProdutos());
+                    trioResultante.adicionaTotalGasto(trio.getTotgasto());
+                    resultado.put(i+1,trioResultante);
+                }
+            }
+        }
+
+        resultado.forEach((k,v) -> lista.add(v));
+        return lista;
+    }
+
+
+
     public static ParTotVendasTotClientesMes getTotVendasTotCli(Integer mes){
         Iterator<Map.Entry<Integer,Filial>> it = vendas.entrySet().iterator();
         int nrVendas = 0;

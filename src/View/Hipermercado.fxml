@@ -97,10 +97,14 @@
                               <Text layoutX="36.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Lista ordenada alfabeticamente com os códigos de produtos nunca comprados" />
                               <Text layoutX="49.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e o seu respectivo total." />
                               <Button layoutX="492.0" layoutY="34.0" mnemonicParsing="false" onAction="#queryOneHandler" text="Executar" />
-                              <Text layoutX="38.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2.  Determinar vendas realizadas e clientes distintos" />
-                              <TextField fx:id="queryTwoMes" layoutX="404.0" layoutY="83.0" prefHeight="25.0" prefWidth="45.0" promptText="1-12" />
-                              <Text layoutX="370.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mes:" />
-                              <Button fx:id="executarButton" layoutX="492.0" layoutY="83.0" mnemonicParsing="false" onAction="#queryTwoHandler" text="Executar" />
+                              <Text layoutX="36.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2.  Determinar vendas realizadas e clientes distintos" />
+                              <TextField fx:id="queryTwoMes" layoutX="422.0" layoutY="83.0" prefHeight="25.0" prefWidth="45.0" promptText="1-12" />
+                              <Text layoutX="372.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mes:" />
+                              <Button fx:id="executarQueryTwoButton" layoutX="492.0" layoutY="83.0" mnemonicParsing="false" onAction="#queryTwoHandler" text="Executar" />
+                              <Text layoutX="36.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3. Número de compras, quantos produtos distintos e quanto gastou, para um cliente" wrappingWidth="338.13671875" />
+                              <Text layoutX="372.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cliente:" wrappingWidth="45.251953125" />
+                              <TextField fx:id="queryThreeText" layoutX="418.0" layoutY="137.0" prefHeight="15.0" prefWidth="57.0" promptText="código" />
+                              <Button fx:id="executarQueryThreeButton" layoutX="492.0" layoutY="137.0" mnemonicParsing="false" onAction="#queryThreeHandler" text="Executar" />
                            </children></AnchorPane>
                     </content>
                   </Tab>

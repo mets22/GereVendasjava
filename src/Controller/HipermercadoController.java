@@ -1,6 +1,7 @@
 package Controller;
 
 
+import Cliente.Cliente;
 import Crono.Crono;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
@@ -28,10 +29,16 @@ import java.nio.file.Paths;
 public class HipermercadoController {
 
     @FXML
+    private TextField queryThreeText;
+
+    @FXML
     private Text produtosCompradosLabel;
 
     @FXML
-    private Button executarButton;
+    private Button executarQueryThreeButton;
+
+    @FXML
+    private Button executarQueryTwoButton;
 
     @FXML
     private TextField queryTwoMes;
@@ -114,9 +121,11 @@ public class HipermercadoController {
         //ficheiroEstado = getClass().getClassLoader().getResource("./Hipermercado/hipermercado.dat").getPath();
 
 
-        BooleanBinding bindButaoExecutarQueryTwo = this.queryTwoMes.textProperty().isEmpty();
+        BooleanBinding bindBotaoExecutarQueryThree = this.queryThreeText.textProperty().isEmpty();
+        BooleanBinding bindBotaoExecutarQueryTwo = this.queryTwoMes.textProperty().isEmpty();
 
-        this.executarButton.disableProperty().bind(bindButaoExecutarQueryTwo);
+        this.executarQueryTwoButton.disableProperty().bind(bindBotaoExecutarQueryTwo);
+        this.executarQueryThreeButton.disableProperty().bind(bindBotaoExecutarQueryThree);
 
         if(modo.equals("retorno")) actualizaTextBoxes();
 
@@ -293,4 +302,18 @@ public class HipermercadoController {
         outrasEstatisticas.setStage(stage);
         outrasEstatisticas.launchController();
     }
+
+    public void queryThreeHandler(ActionEvent actionEvent) throws  IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/QueryThree.fxml"));
+        Parent hipermercado = fxmlLoader.load();
+
+        QueryThreeController queryThreeController = fxmlLoader.getController();
+        queryThreeController.setFacade(facade);
+        queryThreeController.setParent(hipermercado);
+        queryThreeController.setScene(new Scene(hipermercado,450,450));
+        queryThreeController.setStage(stage);
+        String codigo = this.queryThreeText.getText();
+        queryThreeController.launchController(new Cliente(codigo));
+    }
+
 }
