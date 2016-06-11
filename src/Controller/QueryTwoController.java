@@ -4,10 +4,13 @@ import Filial.ParTotVendasTotClientesMes;
 import Hipermercado.Hipermercado;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 
 public class QueryTwoController {
@@ -50,6 +53,18 @@ public class QueryTwoController {
 
     }
 
-    public void retrocederHandler(ActionEvent actionEvent) {
+    public void retrocederHandler(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/Hipermercado.fxml"));
+        Parent Hipermercado = fxmlLoader.load();
+
+        HipermercadoController hipermercadoController = fxmlLoader.getController();
+
+        hipermercadoController.setFacade(facade);
+        hipermercadoController.setParent(Hipermercado);
+        hipermercadoController.setScene(new Scene(Hipermercado,600,400));
+        hipermercadoController.setStage(stage);
+        hipermercadoController.launchController("retorno");
+
     }
 }

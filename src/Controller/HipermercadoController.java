@@ -28,6 +28,9 @@ import java.nio.file.Paths;
 public class HipermercadoController {
 
     @FXML
+    private Text produtosCompradosLabel;
+
+    @FXML
     private Button executarButton;
 
     @FXML
@@ -83,6 +86,17 @@ public class HipermercadoController {
     private static String ficheiroVendas;
     private static String ficheiroEstado;
 
+    private static String ultimoficheirolido;
+    private static int vendaserradas;
+    private static int vendasazero;
+    private static int nrclientestotal;
+    private static int clientesncompraram;
+    private static int nrprodutostotal;
+    private static int nrprodutosncomprados;
+    private static int produtoscomprados;
+    private static int nrvendastotal;
+    private static double faturacaototal;
+
     public void setFacade(Hipermercado facade){this.facade=facade;}
 
     public void setParent(Parent parent){this.parent = parent;}
@@ -91,7 +105,7 @@ public class HipermercadoController {
 
     public void setStage(Stage stage){this.stage = stage;}
 
-    public void launchController(){
+    public void launchController(String modo){
 
 
         ficheiroClientes = getClass().getClassLoader().getResource("./Hipermercado/Clientes.txt").getPath();
@@ -103,6 +117,8 @@ public class HipermercadoController {
         BooleanBinding bindButaoExecutarQueryTwo = this.queryTwoMes.textProperty().isEmpty();
 
         this.executarButton.disableProperty().bind(bindButaoExecutarQueryTwo);
+
+        if(modo.equals("retorno")) actualizaTextBoxes();
 
         stage.setResizable(false);
         stage.setScene(scene);
@@ -141,21 +157,41 @@ public class HipermercadoController {
         Crono.start();
         facade.lerFicheiros(ficheiroClientes,ficheiroProdutos,ficheiroVendas);
         Crono.stop();
+
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Leitura de ficheiros");
         alert.setHeaderText("Leitura dos ficheiros com sucesso");
         alert.setContentText("Tempo de leitura: " + Crono.print());
         alert.show();
 
-        this.ficheiroLidoLabel.setText(facade.ultimoFicheiroLido());
-        this.vendasErradasLabel.setText(String.valueOf(facade.vendasErradas()));
-        this.vendasAZeroLabel.setText(String.valueOf(facade.vendasAZero()));
-        this.clientesLabel.setText(String.valueOf(facade.nrClientesTotal()));
-        this.clientesNCompraramLabel.setText(String.valueOf(facade.ClientesNCompraram()));
-        this.produtosLabel.setText(String.valueOf(facade.nrProdutosTotal()));
-        this.produtosNcompradosLabel.setText(String.valueOf(facade.ProdutosNComprados()));
-        this.faturacaoLabel.setText(String.valueOf(facade.faturacaoTotal()));
-        this.vendasLidasLabel.setText(String.valueOf(facade.vendasLidasTotal()));
+        actualizaEstados();
+        actualizaTextBoxes();
+    }
+
+    public void actualizaEstados(){
+        ultimoficheirolido=facade.ultimoFicheiroLido();
+        vendaserradas=facade.vendasErradas();
+        vendasazero=facade.vendasAZero();
+        nrclientestotal=facade.nrClientesTotal();
+        clientesncompraram=facade.ClientesNCompraram();
+        nrprodutostotal=facade.nrProdutosTotal();
+        nrprodutosncomprados=facade.ProdutosNComprados();
+        faturacaototal=facade.faturacaoTotal();
+        nrvendastotal=facade.vendasLidasTotal();
+        produtoscomprados=facade.produtosComprados();
+    }
+
+    public void actualizaTextBoxes(){
+        this.ficheiroLidoLabel.setText(ultimoficheirolido);
+        this.vendasErradasLabel.setText(String.valueOf(vendaserradas));
+        this.vendasAZeroLabel.setText(String.valueOf(vendasazero));
+        this.clientesLabel.setText(String.valueOf(nrclientestotal));
+        this.clientesNCompraramLabel.setText(String.valueOf(clientesncompraram));
+        this.produtosLabel.setText(String.valueOf(nrprodutostotal));
+        this.produtosNcompradosLabel.setText(String.valueOf(nrprodutosncomprados));
+        this.faturacaoLabel.setText(String.valueOf(faturacaototal));
+        this.vendasLidasLabel.setText(String.valueOf(nrvendastotal));
+        this.produtosCompradosLabel.setText(String.valueOf(produtoscomprados));
     }
 
     public void handlerProcurarEstados(ActionEvent actionEvent) {
@@ -244,5 +280,17 @@ public class HipermercadoController {
             queryTwoController.setStage(stage);
             queryTwoController.launchController(mes);
         }
+    }
+
+    public void outrasEstatisticasHandler(ActionEvent actionEvent) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/OutrasEstatisticas.fxml"));
+        Parent hipermercado = fxmlLoader.load();
+
+        OutrasEstatisticasContoller outrasEstatisticas = fxmlLoader.getController();
+        outrasEstatisticas.setFacade(facade);
+        outrasEstatisticas.setParent(hipermercado);
+        outrasEstatisticas.setScene(new Scene(hipermercado,600,400));
+        outrasEstatisticas.setStage(stage);
+        outrasEstatisticas.launchController();
     }
 }
