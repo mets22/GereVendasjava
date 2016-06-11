@@ -12,7 +12,7 @@
         <columns>
           <TableColumn prefWidth="75.0" text="Filial" />
           <TableColumn prefWidth="75.0" text="Cliente" />
-            <TableColumn prefWidth="164.0" text="Dinheiro Facturado" />
+            <TableColumn prefWidth="200.0" text="Dinheiro Facturado" />
         </columns>
       </TableView>
    </children>
