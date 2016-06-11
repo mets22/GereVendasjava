@@ -77,7 +77,7 @@ public class OutrasEstatisticasContoller {
 
         hipermercadoController.setFacade(facade);
         hipermercadoController.setParent(Hipermercado);
-        hipermercadoController.setScene(new Scene(Hipermercado,600,400));
+        hipermercadoController.setScene(new Scene(Hipermercado,601,400));
         hipermercadoController.setStage(stage);
         hipermercadoController.launchController("retorno");
 

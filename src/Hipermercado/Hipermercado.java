@@ -9,14 +9,17 @@ import Leitor.Input;
 import Leitor.LeitorFicheiros;
 import Produto.CatProdutos;
 import Produto.Produto;
+import Filial.ParClienteTotGasto;
 import Filial.Filial;
+import Filial.ParStringDouble;
 import Filial.TrioNComprasNProdsTotGasto;
+import Filial.TrioNVendasNClientesTotFact;
 import Filial.ParTotVendasTotClientesMes;
+import Filial.ParProdQuantidade;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -158,7 +161,7 @@ public class Hipermercado implements Serializable{
         return res;
     }
 
-    public static ObservableList<OutrasEstatisticas> outrasEstatisticasPedidas(){
+    public  ObservableList<OutrasEstatisticas> outrasEstatisticasPedidas(){
         ObservableList<OutrasEstatisticas> res = FXCollections.observableArrayList();
         int nrComprasMes;
         double faturado;
@@ -173,7 +176,7 @@ public class Hipermercado implements Serializable{
         return res;
     }
 
-    public static ObservableList<EstatisticaFilial> estatisticaFilialObservableList(int filial){
+    public  ObservableList<EstatisticaFilial> estatisticaFilialObservableList(int filial){
         ObservableList<EstatisticaFilial> res = FXCollections.observableArrayList();
 
         double faturado;
@@ -186,7 +189,7 @@ public class Hipermercado implements Serializable{
     }
 
 
-    public static int nrClientesDistintosMes(Integer mes){
+    public  int nrClientesDistintosMes(Integer mes){
         Iterator<Map.Entry<Integer,Filial>> it = vendas.entrySet().iterator();
         Set<Cliente> clientesCompraram = new TreeSet<Cliente>(new ClienteComparator());
 
@@ -198,7 +201,7 @@ public class Hipermercado implements Serializable{
         return clientesCompraram.size();
     }
 
-    public static ObservableList<TrioNComprasNProdsTotGasto> getComprasMensais(Cliente c){
+    public ObservableList<TrioNComprasNProdsTotGasto> getComprasMensais(Cliente c){
         ObservableList<TrioNComprasNProdsTotGasto> lista = FXCollections.observableArrayList();
 
         ArrayList<TrioNComprasNProdsTotGasto> response;
@@ -211,13 +214,13 @@ public class Hipermercado implements Serializable{
             Map.Entry<Integer,Filial> par = it.next();
             Filial aux = par.getValue();
             response = aux.getComprasMensais(c);
-            for(int i=0; i<12;i++){
+            for(int i=0; i<response.size();i++){
                 TrioNComprasNProdsTotGasto trio = response.get(i);
                 if(trio!=null){
-                    TrioNComprasNProdsTotGasto trioResultante = resultado.get(i);
+                    TrioNComprasNProdsTotGasto trioResultante = resultado.get(i+1);
                     if(trioResultante==null) {
                         trioResultante = new TrioNComprasNProdsTotGasto();
-                        trioResultante.setMes(i+1);
+                        trioResultante.setMes(trio.getMes());
                     }
                     trioResultante.adicionaNrCompras(trio.getnCompras());
                     trioResultante.adicionaProdutos(trio.getProdutos());
@@ -231,14 +234,41 @@ public class Hipermercado implements Serializable{
         return lista;
     }
 
+    public ObservableList<TrioNVendasNClientesTotFact> getVendasMensais(Produto p){
+        ObservableList<TrioNVendasNClientesTotFact> lista = FXCollections.observableArrayList();
+        Map<Integer, TrioNVendasNClientesTotFact> resultado = new HashMap<>();
+        ArrayList<TrioNVendasNClientesTotFact> response;
+
+        for(Integer key :vendas.keySet()){
+            Filial aux = vendas.get(key);
+            response = aux.getVendasMensais(p);
+            for(int i=0;i<response.size();i++){
+                TrioNVendasNClientesTotFact trio = response.get(i);
+                if(trio!=null){
+                    TrioNVendasNClientesTotFact trioResultante = resultado.get(i+1);
+                    if(trioResultante==null){
+                        trioResultante = new TrioNVendasNClientesTotFact();
+                        trioResultante.setMes(trio.getMes());
+                    }
+                    trioResultante.adicionaFaturacao(trio.getTotfacturado());
+                    trioResultante.adicionaClientes(trio.getClientes());
+                    trioResultante.adicionaVendas(trio.getnVendas());
+                }
+            }
+
+        }
+        resultado.forEach((k,v) -> lista.add(v));
+        return lista;
+    }
 
 
-    public static ParTotVendasTotClientesMes getTotVendasTotCli(Integer mes){
+
+    public ParTotVendasTotClientesMes getTotVendasTotCli(Integer mes){
         Iterator<Map.Entry<Integer,Filial>> it = vendas.entrySet().iterator();
         int nrVendas = 0;
         int nrClientes = 0;
         ParTotVendasTotClientesMes resultado;
-        Set<Cliente> clientesCompraram = new TreeSet<Cliente>();
+        Set<Cliente> clientesCompraram = new TreeSet<Cliente>(new ClienteComparator());
 
         while(it.hasNext()){
             Map.Entry<Integer,Filial> par = it.next();
@@ -250,6 +280,40 @@ public class Hipermercado implements Serializable{
         resultado = new ParTotVendasTotClientesMes(nrVendas,nrClientes);
         return resultado;
 
+    }
+
+    public ObservableList<ParProdQuantidade> getProdsMaisComprados(Cliente c){
+        ObservableList<ParProdQuantidade> lista = FXCollections.observableArrayList();
+        Set<ParProdQuantidade> resultado = new TreeSet<ParProdQuantidade>();
+
+        for(Integer key:vendas.keySet()){
+            Filial aux = vendas.get(key);
+            Set<ParProdQuantidade> temp = aux.getProdsMaisComprados(c);
+
+            for(ParProdQuantidade par :temp){
+               resultado.add(par);
+            }
+        }
+
+        resultado.forEach(parProdQuantidade -> lista.add(parProdQuantidade));
+        System.out.println(resultado.size());
+        return lista;
+    }
+
+    public  ObservableList<ParClienteTotGasto> getTop3Cli(int filial){
+        ObservableList<ParClienteTotGasto> lista = FXCollections.observableArrayList();
+        Filial fil = vendas.get(filial);
+        Set<ParClienteTotGasto> response = fil.getTop3Cli();
+        response.forEach(parClienteTotGasto -> lista.add(parClienteTotGasto));
+        return lista;
+    }
+
+    public ObservableList<ParStringDouble> clientesquemaiscompraram(int filial, Produto p, int x){
+        ObservableList<ParStringDouble> lista = FXCollections.observableArrayList();
+        Filial fil = vendas.get(filial);
+        ArrayList<ParStringDouble> response = fil.clientesquemaiscompraram(p,x);
+        response.forEach(parStringDouble -> lista.add(parStringDouble));
+        return lista;
     }
 
 }

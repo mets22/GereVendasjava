@@ -5,29 +5,25 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="429.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.QuerySevenController">
    <children>
-      <Button layoutX="497.0" layoutY="389.0" mnemonicParsing="false" text="Retroceder" />
-      <TableView prefHeight="124.0" prefWidth="602.0">
+      <Button layoutX="497.0" layoutY="389.0" mnemonicParsing="false" onAction="#retrocederHandler" text="Retroceder" />
+      <TableView fx:id="resultadosTabelaOne" prefHeight="124.0" prefWidth="602.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="#" />
-          <TableColumn prefWidth="101.0" text="Cliente" />
-            <TableColumn prefWidth="263.0" text="Dinheiro facturado" />
+          <TableColumn fx:id="clienteColumnOne" prefWidth="101.0" text="Cliente" />
+            <TableColumn fx:id="faturadoColumnOne" prefWidth="263.0" text="Dinheiro facturado" />
         </columns>
       </TableView>
-      <TableView layoutY="124.0" prefHeight="124.0" prefWidth="602.0">
+      <TableView fx:id="resultadosTabelaTwo" layoutY="124.0" prefHeight="124.0" prefWidth="602.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="#" />
-            <TableColumn prefWidth="101.0" text="Cliente" />
-            <TableColumn prefWidth="263.0" text="Dinheiro facturado" />
+            <TableColumn fx:id="clienteColumnTwo" prefWidth="101.0" text="Cliente" />
+            <TableColumn fx:id="faturadoColumnTwo" prefWidth="263.0" text="Dinheiro facturado" />
          </columns>
       </TableView>
-      <TableView layoutY="248.0" prefHeight="124.0" prefWidth="602.0">
+      <TableView fx:id="resultadosTabelaThree" layoutY="248.0" prefHeight="124.0" prefWidth="602.0">
          <columns>
-            <TableColumn prefWidth="75.0" text="#" />
-            <TableColumn prefWidth="101.0" text="Cliente" />
-            <TableColumn prefWidth="263.0" text="Dinheiro facturado" />
+            <TableColumn fx:id="clienteColumnThree" prefWidth="101.0" text="Cliente" />
+            <TableColumn fx:id="faturadoColumnThree" prefWidth="263.0" text="Dinheiro facturado" />
          </columns>
       </TableView>
    </children>

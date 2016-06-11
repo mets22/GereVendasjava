@@ -1,6 +1,7 @@
 package Filial;
 
 import Cliente.Cliente;
+import javafx.beans.property.SimpleStringProperty;
 
 /* Utilizada para a query9*/
 
@@ -38,4 +39,17 @@ public class ParStringDouble {
     public void setTotal(Double total) {
         this.total = total;
     }
+
+    public SimpleStringProperty getCodigoClienteProperty(){
+        return new SimpleStringProperty(this.c.getCodigo());
+    }
+
+    public SimpleStringProperty getQuantidadeProperty(){
+        return new SimpleStringProperty(String.valueOf(this.qt));
+    }
+
+    public SimpleStringProperty getTotalFaturadoPropert(){
+        return new SimpleStringProperty(String.valueOf(this.total));
+    }
+
 }

@@ -1,10 +1,8 @@
 package Filial;
 
-/**
- * Created by mets on 11-06-2016.
- */
 
 import Cliente.Cliente;
+import javafx.beans.property.SimpleStringProperty;
 
 public class ParClienteTotGasto implements Comparable<ParClienteTotGasto>{
     private Cliente c;
@@ -27,5 +25,14 @@ public class ParClienteTotGasto implements Comparable<ParClienteTotGasto>{
     public int compareTo(ParClienteTotGasto pc) {
         if(this.totgasto>pc.getTotgasto()) return -1;
         else return 1;
+    }
+
+
+    public SimpleStringProperty getCodigoClienteProperty(){
+        return new SimpleStringProperty(this.c.getCodigo());
+    }
+
+    public SimpleStringProperty getTotalGastoProperty(){
+        return new SimpleStringProperty(String.valueOf(this.totgasto));
     }
 }

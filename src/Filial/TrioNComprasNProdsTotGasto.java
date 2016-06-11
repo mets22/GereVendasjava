@@ -53,12 +53,12 @@ public class TrioNComprasNProdsTotGasto {
     }
 
     public void adicionaProdutos(Set<Produto> produtos){
-        produtos.stream().forEach(produto -> this.produtosComprados.add(produto));
+        produtos.stream().forEach(this::adicionaProduto);
     }
 
     public Set<Produto> getProdutos(){
-        Set<Produto> resultado = new TreeSet<Produto>(new ProdutoComparator());
-        resultado = this.produtosComprados.stream().collect(Collectors.toSet());
+        Set<Produto> resultado = new TreeSet<>(new ProdutoComparator());
+        this.produtosComprados.forEach(produto -> resultado.add(produto));
         return resultado;
     }
 
@@ -80,5 +80,13 @@ public class TrioNComprasNProdsTotGasto {
 
     public SimpleStringProperty getTotalGastoProperty(){
         return new SimpleStringProperty(String.valueOf(this.totgasto));
+    }
+
+    public SimpleStringProperty getProdutosDistintosProperty(){
+        return new SimpleStringProperty(String.valueOf(this.produtosComprados.size()));
+    }
+
+    public boolean existeProduto(Produto p){
+        return this.produtosComprados.contains(p);
     }
 }

@@ -31,13 +31,15 @@ public class FilialCli {
     }
 
     public Integer getnVendasCli(Cliente cli){
-        return vendascli.get(cli).size();
+        TreeSet<Venda> res = vendascli.get(cli);
+        if(res==null) return 0;
+        return res.size();
     }
 
     public Integer getnVendas(){
         Integer res = 0;
-        TreeSet<Cliente> auxcli = (TreeSet<Cliente>) vendascli.keySet();
-        Iterator<Cliente> auxit = auxcli.iterator();
+
+        Iterator<Cliente> auxit = vendascli.keySet().iterator();
 
         while(auxit.hasNext()){
             res += vendascli.get(auxit.next()).size();
@@ -47,7 +49,7 @@ public class FilialCli {
 
     public Set<Cliente> getClientes(){
         Set<Cliente> resultado = new TreeSet<Cliente>(new ClienteComparator());
-        this.vendascli.forEach((k,v) -> resultado.add(k));
+        this.vendascli.forEach((k,v) -> resultado.add(k.clone()));
         return resultado;
     }
 

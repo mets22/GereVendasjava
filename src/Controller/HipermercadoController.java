@@ -3,6 +3,7 @@ package Controller;
 
 import Cliente.Cliente;
 import Crono.Crono;
+import Produto.Produto;
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -27,6 +28,30 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class HipermercadoController {
+
+    @FXML
+    private TextField queryNineCodigoLabel;
+    @FXML
+    private TextField queryFiveTextField;
+    @FXML
+    private Button queryFiveButton;
+    @FXML
+    private TextField querySixTextField;
+    @FXML
+    private Button querySixButton;
+    @FXML
+    private TextField queryEightTextField;
+    @FXML
+    private Button queryEightButton;
+    @FXML
+    private TextField queryNineTextField;
+    @FXML
+    private Button queryNineButton;
+    @FXML
+    private TextField queryFourTextField;
+
+    @FXML
+    private Button queryFourButton;
 
     @FXML
     private TextField queryThreeText;
@@ -121,9 +146,19 @@ public class HipermercadoController {
         //ficheiroEstado = getClass().getClassLoader().getResource("./Hipermercado/hipermercado.dat").getPath();
 
 
+        BooleanBinding bindBotaoExecutarQueryNine = this.queryNineTextField.textProperty().isEmpty();
+        BooleanBinding bindBotaoExecutarQueryEight = this.queryEightTextField.textProperty().isEmpty();
+        BooleanBinding bindBotaoExecutarQuerySix = this.querySixTextField.textProperty().isEmpty();
+        BooleanBinding bindBotaoExecutarQueryFive = this.queryFiveTextField.textProperty().isEmpty();
+        BooleanBinding bindBotaoExecutarQueryFour = this.queryFourTextField.textProperty().isEmpty();
         BooleanBinding bindBotaoExecutarQueryThree = this.queryThreeText.textProperty().isEmpty();
         BooleanBinding bindBotaoExecutarQueryTwo = this.queryTwoMes.textProperty().isEmpty();
 
+        this.queryNineButton.disableProperty().bind(bindBotaoExecutarQueryNine);
+        this.queryEightButton.disableProperty().bind(bindBotaoExecutarQueryEight);
+        this.querySixButton.disableProperty().bind(bindBotaoExecutarQuerySix);
+        this.queryFiveButton.disableProperty().bind(bindBotaoExecutarQueryFive);
+        this.queryFourButton.disableProperty().bind(bindBotaoExecutarQueryFour);
         this.executarQueryTwoButton.disableProperty().bind(bindBotaoExecutarQueryTwo);
         this.executarQueryThreeButton.disableProperty().bind(bindBotaoExecutarQueryThree);
 
@@ -316,4 +351,66 @@ public class HipermercadoController {
         queryThreeController.launchController(new Cliente(codigo));
     }
 
+    public void queryFourHandler(ActionEvent actionEvent) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/QueryFour.fxml"));
+        Parent hipermercado = fxmlLoader.load();
+
+        QueryFourController queryFourController = fxmlLoader.getController();
+        queryFourController.setFacade(facade);
+        queryFourController.setParent(hipermercado);
+        queryFourController.setScene(new Scene(hipermercado,600,400));
+        queryFourController.setStage(stage);
+        String codigo = this.queryFourTextField.getText();
+        queryFourController.launchController(new Produto(codigo));
+    }
+
+    public void queryFiveHandler(ActionEvent actionEvent) throws IOException{
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/QueryFive.fxml"));
+        Parent hipermercado = fxmlLoader.load();
+
+        QueryFiveController queryFiveController = fxmlLoader.getController();
+        queryFiveController.setFacade(facade);
+        queryFiveController.setParent(hipermercado);
+        queryFiveController.setScene(new Scene(hipermercado,342,400));
+        queryFiveController.setStage(stage);
+        String codigo = this.queryFiveTextField.getText();
+        queryFiveController.launchController(new Cliente(codigo));
+
+    }
+
+    public void querySixHandler(ActionEvent actionEvent) {
+    }
+
+    public void querySevenHandler(ActionEvent actionEvent) throws IOException{
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/QuerySeven.fxml"));
+        Parent hipermercado = fxmlLoader.load();
+
+        QuerySevenController querySevenController = fxmlLoader.getController();
+        querySevenController.setFacade(facade);
+        querySevenController.setParent(hipermercado);
+        querySevenController.setScene(new Scene(hipermercado,602,429));
+        querySevenController.setStage(stage);
+        querySevenController.launchController();
+
+    }
+
+    public void queryEightHandler(ActionEvent actionEvent) {
+    }
+
+    public void queryNineHandler(ActionEvent actionEvent) throws IOException{
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/QueryNine.fxml"));
+        Parent hipermercado = fxmlLoader.load();
+
+        QueryNineController queryNineController = fxmlLoader.getController();
+        queryNineController.setFacade(facade);
+        queryNineController.setParent(hipermercado);
+        queryNineController.setScene(new Scene(hipermercado,825,440));
+        queryNineController.setStage(stage);
+        String codigo = this.queryNineCodigoLabel.getText();
+        int x = Integer.valueOf(this.queryNineTextField.getText());
+        queryNineController.launchController(new Produto(codigo), x);
+
+    }
 }

@@ -1,43 +1,34 @@
 package Controller;
 
 
-
-import Crono.Crono;
 import Hipermercado.Hipermercado;
-import Produto.Produto;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-
-import javafx.scene.text.Text;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-
 
 import java.io.IOException;
 
-public class QueryOneController {
+public class QuerySixController {
 
     @FXML
-    private Text totalLabel;
+    private TableView tabelaResultados;
 
     @FXML
-    private TableColumn<Produto,String > colunaProduto;
-
+    private TableColumn produtosColumn;
     @FXML
-    private TableView resultadosTable;
+    private TableColumn vendasColumn;
+    @FXML
+    private TableColumn clientesColumn;
 
     private Parent parent;
     private Scene scene;
     private Stage stage;
     private Hipermercado facade;
-
-    private ObservableList<Produto> listadeProdutos;
-
 
 
     public void setFacade(Hipermercado facade){this.facade=facade;}
@@ -48,17 +39,9 @@ public class QueryOneController {
 
     public void setStage(Stage stage){this.stage = stage;}
 
-    public void launchController(){
+    public void launchController(Integer x){
 
-        Crono.start();
-        this.listadeProdutos = facade.listaProdutosNaoComprados();
-        this.actualizaTabelaResultados(listadeProdutos);
-        Crono.stop();
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Alerta");
-        alert.setHeaderText("Tempo:" + Crono.print());
-        alert.show();
 
         stage.setScene(scene);
         stage.centerOnScreen();
@@ -66,14 +49,6 @@ public class QueryOneController {
         stage.show();
 
     }
-
-
-    public void actualizaTabelaResultados(ObservableList<Produto> lista){
-        colunaProduto.setCellValueFactory(cellData -> cellData.getValue().codigoSimpleStringProperty());
-        resultadosTable.setItems(lista);
-        totalLabel.setText(String.valueOf(lista.size()));
-    }
-
 
     public void retrocederHandler(ActionEvent actionEvent) throws IOException {
 

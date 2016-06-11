@@ -90,22 +90,53 @@
                            </children></AnchorPane>
                   </content>
                 </Tab>
-                  <Tab text="Queries Interactivas">
+                  <Tab text="Queries Interactivas 1">
                     <content>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                            <children>
-                              <Text layoutX="36.0" layoutY="42.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Lista ordenada alfabeticamente com os códigos de produtos nunca comprados" />
-                              <Text layoutX="49.0" layoutY="59.0" strokeType="OUTSIDE" strokeWidth="0.0" text="e o seu respectivo total." />
-                              <Button layoutX="492.0" layoutY="34.0" mnemonicParsing="false" onAction="#queryOneHandler" text="Executar" />
-                              <Text layoutX="36.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2.  Determinar vendas realizadas e clientes distintos" />
-                              <TextField fx:id="queryTwoMes" layoutX="422.0" layoutY="83.0" prefHeight="25.0" prefWidth="45.0" promptText="1-12" />
-                              <Text layoutX="372.0" layoutY="100.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mes:" />
-                              <Button fx:id="executarQueryTwoButton" layoutX="492.0" layoutY="83.0" mnemonicParsing="false" onAction="#queryTwoHandler" text="Executar" />
-                              <Text layoutX="36.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3. Número de compras, quantos produtos distintos e quanto gastou, para um cliente" wrappingWidth="338.13671875" />
-                              <Text layoutX="372.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cliente:" wrappingWidth="45.251953125" />
-                              <TextField fx:id="queryThreeText" layoutX="418.0" layoutY="137.0" prefHeight="15.0" prefWidth="57.0" promptText="código" />
-                              <Button fx:id="executarQueryThreeButton" layoutX="492.0" layoutY="137.0" mnemonicParsing="false" onAction="#queryThreeHandler" text="Executar" />
+                              <Text layoutX="14.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" text="1. Lista ordenada alfabeticamente com os códigos de produtos nunca comprados e o seu respectivo total" wrappingWidth="342.810546875" />
+                              <Button layoutX="492.0" layoutY="19.0" mnemonicParsing="false" onAction="#queryOneHandler" text="Executar" />
+                              <Text layoutX="14.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2.  Determinar vendas realizadas e clientes distintos" />
+                              <TextField fx:id="queryTwoMes" layoutX="424.0" layoutY="71.0" prefHeight="25.0" prefWidth="45.0" promptText="1-12" />
+                              <Text layoutX="374.0" layoutY="88.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Mes:" />
+                              <Button fx:id="executarQueryTwoButton" layoutX="492.0" layoutY="71.0" mnemonicParsing="false" onAction="#queryTwoHandler" text="Executar" />
+                              <Text layoutX="14.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="3. Número de compras, quantos produtos distintos e quanto gastou, para um cliente" wrappingWidth="338.13671875" />
+                              <Text layoutX="372.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cliente:" wrappingWidth="45.251953125" />
+                              <TextField fx:id="queryThreeText" layoutX="419.0" layoutY="120.0" prefHeight="15.0" prefWidth="57.0" promptText="código" />
+                              <Button fx:id="executarQueryThreeButton" layoutX="492.0" layoutY="119.0" mnemonicParsing="false" onAction="#queryThreeHandler" text="Executar" />
+                              <Text layoutX="14.0" layoutY="178.0" strokeType="OUTSIDE" strokeWidth="0.0" text="4. Determinar quantas vezes foi comprado, por quantos clientes distintos e o total faturado, para um produto" wrappingWidth="324.67578125" />
+                              <Text layoutX="369.0" layoutY="187.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produto:" wrappingWidth="51.87890625" />
+                              <TextField fx:id="queryFourTextField" layoutX="419.0" layoutY="170.0" prefHeight="25.0" prefWidth="58.0" promptText="código" />
+                              <Button fx:id="queryFourButton" layoutX="492.0" layoutY="170.0" mnemonicParsing="false" onAction="#queryFourHandler" text="Executar" />
+                              <Text layoutX="14.0" layoutY="230.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5. Determinar a lista de códigos de produtos que mais comprou, para um cliente." wrappingWidth="302.28515625" />
+                              <Text layoutX="371.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Cliente:" wrappingWidth="55.251953125" />
+                              <TextField fx:id="queryFiveTextField" layoutX="418.0" layoutY="222.0" prefHeight="25.0" prefWidth="58.0" promptText="código" />
+                              <Button fx:id="queryFiveButton" layoutX="492.0" layoutY="222.0" mnemonicParsing="false" onAction="#queryFiveHandler" text="Executar" />
                            </children></AnchorPane>
+                    </content>
+                  </Tab>
+                  <Tab text="Queries Interactivas 2">
+                    <content>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <Text layoutX="14.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" text="6. Determinar o conjunto dos X produtos mais vendidos em todo ano e os clientes distintos que o compraram" wrappingWidth="366.748046875" />
+                              <Text layoutX="381.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X:" />
+                              <TextField fx:id="querySixTextField" layoutX="398.0" layoutY="19.0" prefHeight="25.0" prefWidth="50.0" promptText="inteiro" />
+                              <Button fx:id="querySixButton" layoutX="476.0" layoutY="19.0" mnemonicParsing="false" onAction="#querySixHandler" text="Executar" />
+                              <Text layoutX="14.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="7. Determinar, para cada filial, os tres maiores compradores em termos de dinheiro faturado" wrappingWidth="350.748046875" />
+                              <Button layoutX="476.0" layoutY="66.0" mnemonicParsing="false" onAction="#querySevenHandler" text="Executar" />
+                              <Text layoutX="13.0" layoutY="121.0" strokeType="OUTSIDE" strokeWidth="0.0" text="8.  Determinar os códigos dos X clientes que compraram mais produtos diferentes" wrappingWidth="352.419921875" />
+                              <Text layoutX="381.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X:" />
+                              <TextField fx:id="queryEightTextField" layoutX="398.0" layoutY="113.0" prefHeight="25.0" prefWidth="50.0" promptText="inteiro" />
+                              <Button fx:id="queryEightButton" layoutX="476.0" layoutY="113.0" mnemonicParsing="false" onAction="#queryEightHandler" text="Executar" />
+                              <Text layoutX="13.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="9. Determinar o conjunto de X clientes que mais compraram e qual o valor gasto, para um produto dado." wrappingWidth="361.1875" />
+                              <Text layoutX="381.0" layoutY="182.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X:" />
+                              <TextField fx:id="queryNineTextField" layoutX="398.0" layoutY="165.0" prefHeight="25.0" prefWidth="50.0" promptText="inteiro" />
+                              <Button fx:id="queryNineButton" layoutX="476.0" layoutY="165.0" mnemonicParsing="false" onAction="#queryNineHandler" text="Executar" />
+                              <Text layoutX="351.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Produto:" />
+                              <TextField fx:id="queryNineCodigoLabel" layoutX="397.0" layoutY="197.0" prefHeight="25.0" prefWidth="55.0" promptText="Código" />
+                           </children>
+                        </AnchorPane>
                     </content>
                   </Tab>
               </tabs>

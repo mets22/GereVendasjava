@@ -5,15 +5,14 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="552.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.QuerySixController">
    <children>
-      <Button layoutX="447.0" layoutY="360.0" mnemonicParsing="false" text="Retroceder" />
-      <TableView prefHeight="356.0" prefWidth="552.0">
+      <Button layoutX="447.0" layoutY="360.0" mnemonicParsing="false" onAction="#retrocederHandler" text="Retroceder" />
+      <TableView fx:id="tabelaResultados" prefHeight="356.0" prefWidth="552.0">
         <columns>
-          <TableColumn prefWidth="108.0" text="Produto" />
-          <TableColumn prefWidth="214.0" text="Qtd Vendas" />
-            <TableColumn prefWidth="229.0" text="Qtd Clientes" />
+          <TableColumn fx:id="produtosColumn" prefWidth="108.0" text="Produto" />
+          <TableColumn fx:id="vendasColumn" prefWidth="214.0" text="Quantidade vendida" />
+            <TableColumn fx:id="clientesColumn" prefWidth="229.0" text="# Clientes distintos" />
         </columns>
       </TableView>
    </children>

@@ -1,5 +1,6 @@
 package Controller;
 
+import Crono.Crono;
 import Filial.ParTotVendasTotClientesMes;
 import Hipermercado.Hipermercado;
 import javafx.event.ActionEvent;
@@ -7,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -41,10 +43,16 @@ public class QueryTwoController {
 
         this.mesLabel.setText(String.valueOf(mes));
 
+        Crono.start();
         ParTotVendasTotClientesMes par = facade.getTotVendasTotCli(mes);
-
+        Crono.stop();
         this.clientesLabel.setText(String.valueOf(par.getnClientes()));
         this.vendasLabel.setText(String.valueOf(par.getnVendas()));
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Alerta");
+        alert.setHeaderText("Temp:" + Crono.print());
+        alert.show();
 
         stage.setScene(scene);
         stage.centerOnScreen();

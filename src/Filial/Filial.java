@@ -120,20 +120,28 @@ public class Filial {
 
     public ArrayList<TrioNVendasNClientesTotFact> getVendasMensais(Produto p){// resposta a query 4
         ArrayList<TrioNVendasNClientesTotFact> res = new ArrayList<>(12);
-        Iterator<FilialCli> aux1 = vendas.get(p).values().iterator();
+        Map<Integer,FilialCli> aux1;
+        try{
+            aux1 =vendas.get(p);
+        } catch (NullPointerException e){
+            throw new NullPointerException();
+        }
+
         FilialCli filcli;
-        Integer nVendas = 0, nClientes = 0;
+        Integer nVendas = 0;
         double totfacturado;
         TreeSet<Cliente> auxcli;
 
-        while(aux1.hasNext()){
-            filcli = aux1.next();
-            auxcli = (TreeSet<Cliente>)filcli.getClientes();
-            nClientes = auxcli.size();
-            totfacturado = filcli.getTotFacturado();
-            nVendas = filcli.getnVendas();
-            res.add(new TrioNVendasNClientesTotFact(nVendas,nClientes,totfacturado));
+        for(Map.Entry<Integer,FilialCli> par :aux1.entrySet()){
+            filcli = par.getValue();
+            auxcli =(TreeSet<Cliente>) filcli.getClientes();
+            if(auxcli!=null) {
+                totfacturado = filcli.getTotFacturado();
+                nVendas = filcli.getnVendas();
+                res.add(new TrioNVendasNClientesTotFact(par.getKey(), nVendas, auxcli, totfacturado));
+            }
         }
+
         return res;
     }
 
@@ -146,9 +154,9 @@ public class Filial {
         while(auxit.hasNext()){
             nCompras = 0;
             Produto p = auxit.next();
-            for(i=0;i<12;i++){
+            for(i=1;i<=12;i++){
                 auxfilcli = vendas.get(p).get(i);
-                nCompras += auxfilcli.getnVendasCli(c);
+                if(auxfilcli!=null) nCompras += auxfilcli.getnVendasCli(c);
             }
             res.add(new ParProdQuantidade(nCompras,p));
         }
@@ -181,16 +189,19 @@ public class Filial {
         while (auxitprod.hasNext()){
             auxtreecli = new TreeSet<>();
             Produto p = auxitprod.next();
-            for(i=0;i<12;i++){
+            for(i=1;i<=12;i++){
                 auxfilcli = vendas.get(p).get(i);
-                auxtreecli.addAll(auxfilcli.getClientes());
+                if(auxfilcli != null){
+                    auxtreecli.addAll(auxfilcli.getClientes());
+                }
+
             }
             res.put(p,new ParTotVendasTotClientesMes(auxres.get(p),auxtreecli.size()));
         }
         return res;
     }
 
-    public TreeSet<ParClienteTotGasto> getTop3Cli(){// query 7
+    /*public Set<ParClienteTotGasto> getTop3Cli(){// query 7
         TreeMap<Cliente,Double> auxres = new TreeMap<>();
         TreeSet<ParClienteTotGasto> res = new TreeSet<>();
         Map.Entry<Cliente,Double> maxentry = null;
@@ -201,14 +212,14 @@ public class Filial {
 
         while(auxit.hasNext()){
             Produto p = auxit.next();
-            for(i=0;i<12;i++){
+            for(i=1;i<=12;i++){
                 auxfilcli = vendas.get(p).get(i);
-                Iterator<Cliente> auxitcli = auxfilcli.getClientes().iterator();
-                while(auxitcli.hasNext()){
-                    totgasto = 0.0;
-                    Cliente c = auxitcli.next();
-                    totgasto = auxfilcli.getTotFacturadoCli(c) + auxres.get(c);
-                    auxres.put(c,totgasto);
+                if(auxfilcli!=null){
+                    Set<Cliente> auxitcli = auxfilcli.getClientes();
+                    for(Cliente c : auxitcli ){
+                        totgasto = auxfilcli.getTotFacturadoCli(c) + auxres.get(c);
+                        auxres.put(c,totgasto);
+                    }
                 }
             }
 
@@ -222,6 +233,42 @@ public class Filial {
             }
         }
         return res;
+    }*/
+
+    public Set<ParClienteTotGasto> getClientesOrdenadosPorQuantidadeComprada(){
+        Set<ParClienteTotGasto> resultado = new TreeSet<>();
+        Map<Cliente,Double> temp = new HashMap<>();
+
+        for(Produto p: vendas.keySet()){
+            for(int i = 1; i<=12;i++){
+                FilialCli filialCli = vendas.get(p).get(i);
+                if(filialCli!=null){
+                    Set<Cliente> clientesProduto = filialCli.getClientes();
+                    for (Cliente c: clientesProduto){
+                        double temp1 = filialCli.getTotFacturadoCli(c);
+                        double temp2;
+                        if(temp.containsKey(c)) temp2 = temp.get(c);
+                        else temp2 =0.0;
+                        temp.put(c,temp1+temp2);
+                    }
+                }
+            }
+        }
+        temp.forEach((k,v) -> resultado.add(new ParClienteTotGasto(v,k.clone())));
+        return resultado;
+    }
+
+    public Set<ParClienteTotGasto> getTop3Cli(){
+        NavigableSet<ParClienteTotGasto> temp = (NavigableSet<ParClienteTotGasto>)getClientesOrdenadosPorQuantidadeComprada();
+        Set<ParClienteTotGasto> resultado = new TreeSet<>();
+        int i= 0;
+
+        Iterator<ParClienteTotGasto> it = temp.iterator();
+        while (it.hasNext() && i<3){
+            resultado.add(it.next());
+            i++;
+        }
+        return resultado;
     }
 
     public ArrayList<String> topvariedade(int X){

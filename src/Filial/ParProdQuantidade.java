@@ -1,10 +1,9 @@
 package Filial;
 
 import Produto.Produto;
+import javafx.beans.property.SimpleStringProperty;
 
-/**
- * Created by mets on 11-06-2016.
- */
+
 public class ParProdQuantidade implements Comparable<ParProdQuantidade>{
     private int quantidade;
     private Produto p;
@@ -30,4 +29,19 @@ public class ParProdQuantidade implements Comparable<ParProdQuantidade>{
         else if(this.p.getCodigo().compareTo(ppq.getP().getCodigo())<0) return 1;
         else return 0;
     }
+
+    public SimpleStringProperty getCodigoProdutoProperty(){
+        return new SimpleStringProperty(this.p.getCodigo());
+    }
+
+    public void adicionaQuantidade(int quantidade){
+        this.quantidade+=quantidade;
+    }
+
+    public SimpleStringProperty getQuantidadeProperty(){
+        return new SimpleStringProperty(String.valueOf(this.quantidade));
+    }
+
+
+
 }

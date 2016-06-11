@@ -1,6 +1,7 @@
 package Controller;
 
 
+import Crono.Crono;
 import Filial.TrioNComprasNProdsTotGasto;
 import Cliente.Cliente;
 import Hipermercado.Hipermercado;
@@ -10,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.text.Text;
@@ -57,8 +59,22 @@ public class QueryThreeController {
 
     public void launchController(Cliente cliente) {
 
+        double totalGasto = 0.0;
+
+        Crono.start();
         this.valoresParaTabela = facade.getComprasMensais(cliente);
         actualizaTable(this.valoresParaTabela);
+        this.clienteLabel.setText(cliente.getCodigo());
+        for(TrioNComprasNProdsTotGasto t: this.valoresParaTabela){
+            totalGasto+=t.getTotgasto();
+        }
+        this.totalGastoLabel.setText(String.valueOf(totalGasto));
+        Crono.stop();
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Alerta");
+        alert.setHeaderText("Tempo:" + Crono.print());
+        alert.show();
 
         stage.setScene(scene);
         stage.centerOnScreen();
@@ -67,10 +83,10 @@ public class QueryThreeController {
     }
 
     public void actualizaTable(ObservableList<TrioNComprasNProdsTotGasto> lista){
-        colunaMes.setCellValueFactory(cellData -> cellData.getValue().getMesProperty());
-        colunaCompras.setCellValueFactory(cellData -> cellData.getValue().getNComprasProperty());
-        colunaProdutos.setCellValueFactory(cellData -> cellData.getValue().getTotalGastoProperty());
-        tabelaResultados.setItems(lista);
+        this.colunaMes.setCellValueFactory(cellData -> cellData.getValue().getMesProperty());
+        this.colunaCompras.setCellValueFactory(cellData -> cellData.getValue().getNComprasProperty());
+        this.colunaProdutos.setCellValueFactory(cellData -> cellData.getValue().getProdutosDistintosProperty());
+        this.tabelaResultados.setItems(lista);
     }
 
 

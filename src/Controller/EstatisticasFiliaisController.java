@@ -5,6 +5,7 @@ import Hipermercado.Hipermercado;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,6 +14,8 @@ import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 
 import Hipermercado.EstatisticaFilial;
+
+import java.io.IOException;
 
 public class EstatisticasFiliaisController {
     
@@ -87,6 +90,17 @@ public class EstatisticasFiliaisController {
     }
 
 
-    public void retrocederHandler(ActionEvent actionEvent) {
+    public void retrocederHandler(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/OutrasEstatisticas.fxml"));
+        Parent hipermercado = fxmlLoader.load();
+
+        OutrasEstatisticasContoller outrasEstatisticas = fxmlLoader.getController();
+        outrasEstatisticas.setFacade(facade);
+        outrasEstatisticas.setParent(hipermercado);
+        outrasEstatisticas.setScene(new Scene(hipermercado,600,400));
+        outrasEstatisticas.setStage(stage);
+        outrasEstatisticas.launchController();
+
     }
 }
