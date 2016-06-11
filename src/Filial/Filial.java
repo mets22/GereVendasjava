@@ -176,9 +176,9 @@ public class Filial {
         return res;
     }
 
-    public TreeMap<Cliente,Double> getTop3Cli(){// query 7
+    public TreeSet<ParClienteTotGasto> getTop3Cli(){// query 7
         TreeMap<Cliente,Double> auxres = new TreeMap<>();
-        TreeMap<Cliente,Double> res = new TreeMap<>();
+        TreeSet<ParClienteTotGasto> res = new TreeSet<>();
         Map.Entry<Cliente,Double> maxentry = null;
         FilialCli auxfilcli;
         Iterator<Produto> auxit = vendas.keySet().iterator();
@@ -203,11 +203,10 @@ public class Filial {
             for (Map.Entry<Cliente, Double> entry : auxres.entrySet()) {
                 if (maxentry == null || entry.getValue().compareTo(maxentry.getValue()) > 0) {
                     maxentry = entry;
-                    res.put(maxentry.getKey(), maxentry.getValue());
+                    res.add(new ParClienteTotGasto(maxentry.getValue(),maxentry.getKey()));
                 }
             }
         }
-        res = auxres;
         return res;
     }
 
