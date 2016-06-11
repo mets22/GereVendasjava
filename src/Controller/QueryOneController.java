@@ -1,6 +1,7 @@
 package Controller;
 
 
+import Controller.HipermercadoController;
 import Hipermercado.Hipermercado;
 import Produto.Produto;
 import javafx.collections.ObservableList;

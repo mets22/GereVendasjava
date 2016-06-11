@@ -1,8 +1,6 @@
 package Filial;
 
-/**
- * Created by mets on 07-06-2016.
- */
+
 public class ParTotVendasTotClientesMes {
     Integer nVendas;
     Integer nClientes;

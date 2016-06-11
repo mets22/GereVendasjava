@@ -187,6 +187,17 @@ public class FaturacaoFilial {
     }
 
 
+    public double faturadoTotal(){
+        double resultadopromocao = this.faturadoPromocaoTotal();
+        double resultadonormal = this.faturadoNormalTotal();
+        return resultadonormal+resultadopromocao;
+    }
+
+    public double faturadoTotalMes(int mes){
+        double resultadopromocao = this.faturadoPromocaoTotalMes(mes);
+        double resultadonormal = this.faturadoNormalTotalMes(mes);
+        return resultadopromocao+resultadonormal;
+    }
     @Override
     public FaturacaoFilial clone(){return new FaturacaoFilial(this);}
 }

@@ -1,23 +1,23 @@
 package Filial;
 
 import Cliente.Cliente;
-import sun.reflect.generics.tree.Tree;
+import Cliente.ClienteComparator;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
-/**
- * Created by mets on 06-06-2016.
- */
 
 public class FilialCli {
-    private static TreeMap<Cliente,TreeSet<Venda>> vendascli;
+    private TreeMap<Cliente,TreeSet<Venda>> vendascli;
 
-    public static TreeMap<Cliente, TreeSet<Venda>> getVendascli() {
+    public TreeMap<Cliente, TreeSet<Venda>> getVendascli() {
         return vendascli;
     }
 
     public FilialCli(){
-        this.vendascli = new TreeMap<>();
+        this.vendascli = new TreeMap<>(new ClienteComparator());
     }
 
     public TreeSet<Venda> getVendasCli(Cliente cli){
@@ -45,8 +45,10 @@ public class FilialCli {
         return res;
     }
 
-    public TreeSet<Cliente> getClientes(){
-        return (TreeSet<Cliente>) vendascli.navigableKeySet();
+    public Set<Cliente> getClientes(){
+        Set<Cliente> resultado = new TreeSet<Cliente>(new ClienteComparator());
+        this.vendascli.forEach((k,v) -> resultado.add(k));
+        return resultado;
     }
 
     public Integer getnClientes(){
@@ -83,12 +85,10 @@ public class FilialCli {
     public void insereFilialCli(Venda v){
         Cliente cli = v.getCliente();
 
-        if(vendascli.containsKey(cli)) vendascli.get(cli).add(v);
-        else {
-            TreeSet<Venda> aux = new TreeSet<>();
-            aux.add(v);
-            vendascli.put(cli,aux);
-        }
+        TreeSet<Venda> aux = vendascli.get(cli);
+        if(aux==null) aux = new TreeSet<Venda>(new VendaComparator());
+        aux.add(v);
+        vendascli.put(cli,aux);
     }
 
 

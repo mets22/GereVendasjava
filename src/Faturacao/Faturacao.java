@@ -63,6 +63,46 @@ public class Faturacao {
         return resultado;
     }
 
+    public Set<Produto> produtosComprados(){
+        Set<Produto> resultado = new TreeSet<Produto>(new ProdutoComparator());
+        Iterator<Map.Entry<String,FaturacaoFilial>> it = faturacaoPorProduto.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry<String,FaturacaoFilial> par = it.next();
+            FaturacaoFilial aux = par.getValue();
+            if(!aux.semVendas()) resultado.add(new Produto(par.getKey()));
+        }
+        return resultado;
+    }
+
+
+    public double getFaturacaoTotal(){
+        double faturado = faturacaoPorProduto.values().stream().mapToDouble(FaturacaoFilial::faturadoTotal).sum();
+        return faturado;
+    }
+
+    public double getFaturacaoTotalMes(int mes){
+        double faturado= 0;
+        Iterator<Map.Entry<String,FaturacaoFilial>> it = faturacaoPorProduto.entrySet().iterator();
+        while (it.hasNext()){
+            Map.Entry<String,FaturacaoFilial> par = it.next();
+            FaturacaoFilial aux = par.getValue();
+            faturado+= aux.faturadoTotalMes(mes);
+        }
+        return faturado;
+    }
+
+    public int getTotalVendasMes(int mes){
+        int vendas = 0;
+        Iterator<Map.Entry<String,FaturacaoFilial>> it = faturacaoPorProduto.entrySet().iterator();
+        while(it.hasNext()){
+            Map.Entry<String,FaturacaoFilial> par = it.next();
+            FaturacaoFilial aux = par.getValue();
+            vendas+= aux.nrVendasNormaisTotalMes(mes);
+            vendas+= aux.nrVendasPromocaoTotalMes(mes);
+        }
+        return vendas;
+    }
+
 
     @Override
     public Faturacao clone(){return new Faturacao(this);}

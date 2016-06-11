@@ -3,12 +3,15 @@ package Controller;
 
 import Crono.Crono;
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import Hipermercado.Hipermercado;
@@ -23,6 +26,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class HipermercadoController {
+
+    @FXML
+    private Button executarButton;
+
+    @FXML
+    private TextField queryTwoMes;
 
     @FXML
     private Text ficheiroLidoLabel;
@@ -90,6 +99,11 @@ public class HipermercadoController {
         ficheiroVendas  = getClass().getClassLoader().getResource("./Hipermercado/Vendas_1M.txt").getPath();
         //ficheiroEstado = getClass().getClassLoader().getResource("./Hipermercado/hipermercado.dat").getPath();
 
+
+        BooleanBinding bindButaoExecutarQueryTwo = this.queryTwoMes.textProperty().isEmpty();
+
+        this.executarButton.disableProperty().bind(bindButaoExecutarQueryTwo);
+
         stage.setResizable(false);
         stage.setScene(scene);
         stage.centerOnScreen();
@@ -141,6 +155,7 @@ public class HipermercadoController {
         this.produtosLabel.setText(String.valueOf(facade.nrProdutosTotal()));
         this.produtosNcompradosLabel.setText(String.valueOf(facade.ProdutosNComprados()));
         this.faturacaoLabel.setText(String.valueOf(facade.faturacaoTotal()));
+        this.vendasLidasLabel.setText(String.valueOf(facade.vendasLidasTotal()));
     }
 
     public void handlerProcurarEstados(ActionEvent actionEvent) {
@@ -207,5 +222,27 @@ public class HipermercadoController {
         queryOneController.setScene(new Scene(Hipermercado,320,480));
         queryOneController.setStage(stage);
         queryOneController.launchController();
+    }
+
+    public void queryTwoHandler(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/View/QueryTwo.fxml"));
+        Parent Hipermercado = fxmlLoader.load();
+
+        if((Integer.valueOf(this.queryTwoMes.getText())<0) || (Integer.valueOf(this.queryTwoMes.getText())>12)) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erro");
+            alert.setContentText("Precisa de introduzir um valor válido");
+            alert.show();
+        }
+
+        else {
+            int mes = Integer.valueOf(this.queryTwoMes.getText());
+            QueryTwoController queryTwoController = fxmlLoader.getController();
+            queryTwoController.setFacade(facade);
+            queryTwoController.setParent(Hipermercado);
+            queryTwoController.setScene(new Scene(Hipermercado, 300, 160));
+            queryTwoController.setStage(stage);
+            queryTwoController.launchController(mes);
+        }
     }
 }

@@ -1,6 +1,7 @@
 package Hipermercado;
 
 import Cliente.CatClientes;
+import Cliente.Cliente;
 import Faturacao.Faturacao;
 import Filial.Venda;
 import Leitor.Input;
@@ -8,6 +9,7 @@ import Leitor.LeitorFicheiros;
 import Produto.CatProdutos;
 import Produto.Produto;
 import Filial.Filial;
+import Filial.ParTotVendasTotClientesMes;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -100,7 +102,7 @@ public class Hipermercado implements Serializable{
     }
 
     public static double faturacaoTotal(){
-        return estatistica.getFaturacaototal();
+        return faturacao.getFaturacaoTotal();
     }
 
     public static int vendasErradas(){
@@ -116,7 +118,12 @@ public class Hipermercado implements Serializable{
     }
 
     public static int produtosComprados(){
-        return estatistica.getNrProdutosComprados();
+        Set<Produto> resultado = faturacao.produtosComprados();
+        return resultado.size();
+    }
+
+    public static int vendasLidasTotal(){
+        return estatistica.getVendasTotais();
     }
 
     public static int ClientesNCompraram(){
@@ -147,6 +154,26 @@ public class Hipermercado implements Serializable{
         ObservableList<Produto> res = FXCollections.observableArrayList();
         res.addAll(faturacao.produtosNaoComprados().stream().collect(Collectors.toList()));
         return res;
+    }
+
+
+    public static ParTotVendasTotClientesMes getTotVendasTotCli(Integer mes){
+        Iterator<Map.Entry<Integer,Filial>> it = vendas.entrySet().iterator();
+        int nrVendas = 0;
+        int nrClientes = 0;
+        ParTotVendasTotClientesMes resultado;
+        Set<Cliente> clientesCompraram;
+
+        while(it.hasNext()){
+            Map.Entry<Integer,Filial> par = it.next();
+            Filial aux = par.getValue();
+            clientesCompraram = aux.totalClientesDistintosPorMes(mes);
+            nrClientes+=clientesCompraram.size();
+        }
+        nrVendas+= faturacao.getTotalVendasMes(mes);
+        resultado = new ParTotVendasTotClientesMes(nrVendas,nrClientes);
+        return resultado;
+
     }
 
 }

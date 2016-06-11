@@ -5,52 +5,55 @@ import Cliente.ClienteComparator;
 import Produto.ProdutoComparator;
 import Produto.Produto;
 
+import java.io.Serializable;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
-public class Estatistica {
+public class Estatistica implements Serializable{
     private static String ficheiro;
     private static int VendasErradas;
-    private static Set<Produto> ProdutosComprados;
     private static Set<Cliente> ClientesCompraram;
     private static int vendasAzero;
-    private static double faturacaototal;
     private static int VendasCorretas;
+    private static int vendasTotais;
 
     public Estatistica(){
         ficheiro = "NA";
         VendasErradas = 0;
-        ProdutosComprados = new TreeSet<>(new ProdutoComparator());
         ClientesCompraram = new TreeSet<>(new ClienteComparator());
         vendasAzero = 0;
-        faturacaototal = 0.0;
         VendasCorretas = 0;
+        vendasTotais = 0;
     }
 
     public Estatistica(String ficheirov){
         ficheiro = ficheirov;
         VendasErradas = 0;
-        ProdutosComprados = new TreeSet<>(new ProdutoComparator());
         ClientesCompraram = new TreeSet<>(new ClienteComparator());
         vendasAzero = 0;
-        faturacaototal = 0.0;
         VendasCorretas = 0;
+        vendasTotais = 0;
     }
 
-    public Estatistica(String ficheirov, int vendasErradas, Set<Produto> produtosComprados, Set<Cliente> clientesCompraram, int vendaszero, double faturacao,int vendasCorretas){
+    public Estatistica(String ficheirov, int vendasErradas, Set<Cliente> clientesCompraram, int vendaszero,int vendasCorretas,int vendasTotaisArg){
         ficheiro = ficheirov;
         VendasErradas = vendasErradas;
+        ClientesCompraram = new TreeSet<Cliente>(new ClienteComparator());
+        clientesCompraram.forEach(cliente -> ClientesCompraram.add(cliente.clone()));
         vendasAzero = vendaszero;
-        faturacaototal = faturacao;
         VendasCorretas = vendasCorretas;
+        vendasTotais = vendasTotaisArg;
     }
 
     public Estatistica(Estatistica e){
         ficheiro = e.getFicheiro();
         VendasErradas = e.getVendasErradas();
+        ClientesCompraram = e.getClientesCompraram();
         vendasAzero = e.getVendasAzero();
-        faturacaototal = e.getFaturacaototal();
         VendasCorretas = e.getVendasCorretas();
+        vendasTotais = e.getVendasTotais();
+
     }
 
     public static String getFicheiro() {
@@ -80,36 +83,11 @@ public class Estatistica {
         return vendasAzero;
     }
 
-    public static void setFaturacaototal(double faturacao){
-        faturacaototal = faturacao;
-    }
-
-    public static void adicionaFaturacaoTotal(double faturacao){
-        faturacaototal+=faturacao;
-    }
-
-    public static double getFaturacaototal() {
-        return faturacaototal;
-    }
-
-    public static Set<Produto> getProdutosComprados() {
-        return ProdutosComprados;
-    }
-
-    public static void setProdutosComprados(Set<Produto> produtosComprados) {
-        ProdutosComprados = produtosComprados;
-    }
-
-    public static void adicionaProdutoComprado(Produto produto){
-        ProdutosComprados.add(produto);
-    }
-
-    public static int getNrProdutosComprados(){
-        return ProdutosComprados.size();
-    }
 
     public static Set<Cliente> getClientesCompraram() {
-        return ClientesCompraram;
+        Set<Cliente> resultado = new TreeSet<Cliente>(new ClienteComparator());
+        ClientesCompraram.forEach(cliente -> resultado.add(cliente.clone()));
+        return resultado;
     }
 
     public static int getNrClientesCompraram(){
@@ -135,4 +113,14 @@ public class Estatistica {
     public static void adicionaVendaCorreta(int vendas){
         VendasCorretas+=vendas;
     }
+
+    public static int getVendasTotais() {
+        return vendasTotais;
+    }
+
+    public static void setVendasTotais(int vendasTotais) {
+        Estatistica.vendasTotais = vendasTotais;
+    }
+
+    public static void adicionaVenda(int  venda){vendasTotais+=venda;}
 }

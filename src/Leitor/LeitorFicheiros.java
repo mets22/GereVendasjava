@@ -164,10 +164,7 @@ public class LeitorFicheiros {
 
         Map<Integer,Filial> resultado = new HashMap<>();
 
-        int clientesnaoregistados= 0;
-        int produtosnaoregistados= 0;
         int comprasazero = 0;
-        int inseridoscomsucesso = 0;
 
         for(String s: linhas) {
             int clientenregistadolinha = 0;
@@ -176,11 +173,9 @@ public class LeitorFicheiros {
 
             Venda v = parseLinhaVenda(s);
             if (!catClientes.existecli(v.getCliente())) {
-                clientesnaoregistados++;
                 clientenregistadolinha = 1;
             }
             if (!catProdutos.existeprod(v.getProduto())) {
-                produtosnaoregistados++;
                 produtonregistadolinha = 1;
             }
             if (v.getPreco() == 0.0) {
@@ -189,23 +184,17 @@ public class LeitorFicheiros {
             }
 
             if (comprazerolinha == 0 && clientenregistadolinha == 0 && produtonregistadolinha == 0) {
-                Filial filial;
-                try {
-                    filial = resultado.get(v.getFilial());
-                } catch (IndexOutOfBoundsException e) {
-                    filial = new Filial();
-                }
-
-                //filial.insere(v);
-                //resultado.put(v.getFilial(), filial);
+                Filial filial = resultado.get(v.getFilial());
+                if(filial==null) filial = new Filial();
+                filial.insere(v);
+                resultado.put(v.getFilial(), filial);
                 estatistica.adicionaClienteComprou(v.getCliente().clone());
-                estatistica.adicionaProdutoComprado(v.getProduto().clone());
-                estatistica.adicionaFaturacaoTotal(v.getPreco());
                 estatistica.adicionaVendaCorreta(1);
                 faturacaoMap.adicionaVenda(v);
             }else{
                 estatistica.adicionaVendaErrada(1);
             }
+            estatistica.adicionaVenda(1);
         }
         estatistica.adicionaVendasAZero(comprasazero);
         return resultado;

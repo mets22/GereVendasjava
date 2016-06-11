@@ -2,66 +2,78 @@ package Filial;
 
 import Cliente.Cliente;
 import Produto.Produto;
+import Produto.ProdutoComparator;
+import Cliente.ClienteComparator;
 
 import java.util.*;
 
-import static Filial.FilialCli.getVendascli;
-
 
 public class Filial {
-    private TreeMap<Produto,ArrayList<FilialCli>> vendas;
-    private TreeMap<Produto,Integer> quantidadevendas;
+    private Map<Produto,Map<Integer,FilialCli>> vendas;
+    private Map<Produto,Integer> quantidadevendas;
 
     public Filial(){
-        vendas = new TreeMap<>();quantidadevendas = new TreeMap<>();
+        vendas = new TreeMap<>(new ProdutoComparator());quantidadevendas = new TreeMap<>(new ProdutoComparator());
     }
 
     public void insere(Venda v){
         Integer mes = v.getMes();
         Produto prod = v.getProduto();
+        Integer quantidade = quantidadevendas.get(prod);
+        Map<Integer,FilialCli> aux = vendas.get(prod);
+        if(aux == null) {aux = new TreeMap<Integer, FilialCli>();}
+        FilialCli auxfilial = aux.get(mes);
+        if(auxfilial==null) auxfilial= new FilialCli();
+        if(quantidade==null) quantidade = 0;
 
-        if(vendas.containsKey(prod)) {
-            ArrayList<FilialCli> aux = vendas.get(prod);
-            FilialCli auxfilial = aux.get(mes-1);
-            Integer auxalint = quantidadevendas.get(prod) + v.getNuni();
+        auxfilial.insereFilialCli(v);
 
-            auxfilial.insereFilialCli(v);
-            aux.remove(mes-1);
-            aux.add(mes-1,auxfilial);
-            vendas.put(prod,aux);
-            quantidadevendas.put(prod,auxalint);
-
-        }
-        else{
-            ArrayList<FilialCli> aux = new ArrayList<>();
-            FilialCli auxfilial = new FilialCli();
-            Integer quanti = v.getNuni();
-
-            aux.add(mes-1,auxfilial);
-            auxfilial.insereFilialCli(v);
-            vendas.put(prod,aux);
-            quantidadevendas.put(prod,quanti);
-        }
+        aux.put(mes,auxfilial);
+        vendas.put(prod,aux);
+        quantidadevendas.put(prod,quantidade+v.getNuni());
     }
 
-    public ParTotVendasTotClientesMes getTotVendasTotCli(Integer mes){ //query 2
+    /*public ParTotVendasTotClientesMes getTotVendasTotCli(Integer mes){ //query 2
         ParTotVendasTotClientesMes res;
         Integer nVendas=0, nClientes=0;
-        TreeSet<Produto> auxprod = (TreeSet<Produto>) vendas.keySet();
-        TreeSet<Cliente> auxtreecli = new TreeSet<>();
+        TreeSet<Produto> auxprod = new TreeSet<Produto>(new ProdutoComparator());
+        vendas.forEach((k,v) -> auxprod.add(k));
+        TreeSet<Cliente> auxtreecli = new TreeSet<>(new ClienteComparator());
         Iterator<Produto> auxalcli = auxprod.iterator();
         Iterator<FilialCli> auxitfilcli;
         FilialCli auxfilcli;
 
         while(auxalcli.hasNext()){
-            auxfilcli = vendas.get(auxalcli.next()).get(mes-1);
-            auxtreecli.addAll(auxfilcli.getClientes());
-            nVendas += auxfilcli.getnVendas();
+            auxfilcli = vendas.get(auxalcli.next()).get(mes);
+            if(auxfilcli!=null) {
+                auxtreecli.addAll(auxfilcli.getClientes());
+                nVendas += auxfilcli.getnVendas();
+            }
         }
         nClientes = auxtreecli.size();
 
         res = new ParTotVendasTotClientesMes(nVendas,nClientes);
         return res;
+
+        ParTotVendasTotClientesMes resultado;
+        Integer nVendas=0, nClientes =0;
+
+    }*/
+
+    public Set<Cliente> totalClientesDistintosPorMes(Integer mes){
+        Set<Cliente> resultado = new TreeSet<Cliente>(new ClienteComparator());
+        Iterator<Map.Entry<Produto,Map<Integer,FilialCli>>> it = this.vendas.entrySet().iterator();
+
+        while(it.hasNext()){
+            Map.Entry<Produto,Map<Integer,FilialCli>> par = it.next();
+            Map<Integer,FilialCli> aux = par.getValue();
+            FilialCli filialCli = aux.get(mes);
+            if(filialCli!=null) {
+                resultado.addAll(filialCli.getClientes());
+            }
+        }
+
+        return resultado;
     }
 
     public ArrayList<TrioNComprasNProdsTotGasto> getComprasMensais(Cliente c){//resposta a query 3
@@ -70,7 +82,7 @@ public class Filial {
         double totgasto = 0.0;
         TreeSet<Produto> auxprod = (TreeSet<Produto>) vendas.keySet();
         Iterator<Produto> auxitprod = auxprod.iterator();
-        ArrayList<FilialCli> auxalcli;
+        Map<Integer,FilialCli> auxalcli;
         boolean flag = false;
 
         while(auxitprod.hasNext()){
@@ -92,7 +104,7 @@ public class Filial {
 
     public ArrayList<TrioNVendasNClientesTotFact> getVendasMensais(Produto p){// resposta a query 4
         ArrayList<TrioNVendasNClientesTotFact> res = new ArrayList<>(12);
-        Iterator<FilialCli> aux1 = vendas.get(p).iterator();
+        Iterator<FilialCli> aux1 = vendas.get(p).values().iterator();
         FilialCli filcli;
         Integer nVendas = 0, nClientes = 0;
         double totfacturado;
@@ -100,7 +112,7 @@ public class Filial {
 
         while(aux1.hasNext()){
             filcli = aux1.next();
-            auxcli = filcli.getClientes();
+            auxcli = (TreeSet<Cliente>)filcli.getClientes();
             nClientes = auxcli.size();
             totfacturado = filcli.getTotFacturado();
             nVendas = filcli.getnVendas();
@@ -199,7 +211,7 @@ public class Filial {
 
     /* Devolve os X clientes com maior variedade de produtos comprados  */
 
-    public ArrayList<String> topvariedade(int X){
+    /*public ArrayList<String> topvariedade(int X){
         ArrayList<Clienteqt> res = new ArrayList<>();
         ArrayList<String> cods = new ArrayList<>();
 
@@ -225,7 +237,6 @@ public class Filial {
         }
 
         return cods;
-    }
-
+    }*/
 
 }
