@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="342.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.QueryFiveController">
+   <children>
+      <Button layoutX="237.0" layoutY="360.0" mnemonicParsing="false" onAction="#retrocederHandler" text="Retroceder" />
+      <TableView fx:id="tabelaResultados" prefHeight="356.0" prefWidth="342.0">
+        <columns>
+          <TableColumn fx:id="produtoColumn" prefWidth="108.0" text="Produto" />
+          <TableColumn fx:id="vendasColumn" prefWidth="155.0" text="Qtd Vendas" />
+        </columns>
+      </TableView>
+   </children>
+</Pane>

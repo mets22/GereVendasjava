@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.Pane?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.QueryFourController">
+   <children>
+      <Button layoutX="495.0" layoutY="360.0" mnemonicParsing="false" onAction="#retrocederHandler" text="Retroceder" />
+      <TableView fx:id="resultadoTable" prefHeight="348.0" prefWidth="600.0">
+        <columns>
+          <TableColumn fx:id="mesColumn" prefWidth="75.0" text="Mes" />
+          <TableColumn fx:id="vendasColumn" prefWidth="151.0" text="Qtd Vendas" />
+            <TableColumn fx:id="clientesColumn" prefWidth="165.0" text="Qtd Clientes" />
+            <TableColumn fx:id="faturadoColumn" prefWidth="208.0" text="€€ Facturado" />
+        </columns>
+      </TableView>
+   </children>
+</Pane>
